@@ -77,6 +77,7 @@ body, html {
 /* Inicio Banner */
 .banner {
   background-image: url("./img-home/banner-photo.jpg");
+  background-image: url("./img-home/banner-photo.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -183,8 +184,6 @@ body, html {
 /* Inicio Skills */
 .hard-skill {
   background-color: var(--color-card);
-/* Inicio Skills */
-
   padding: 60px 20px;
 }
 .title-skill {
@@ -425,7 +424,6 @@ body, html {
 }
 
 /* Fim footer */
-
 /* Textos e imagnes configurações GLOBAIS */
 
 .title-skill{
@@ -454,7 +452,6 @@ body, html {
 .database > div,
 .frameworks > div {
   background-color: var(--color-white);
-
   border-radius: 20px;
   padding: 30px 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
