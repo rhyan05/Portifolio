@@ -19,7 +19,6 @@
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
-  box-sizing: border-box;
 }
 
 body, html {
@@ -77,7 +76,6 @@ body, html {
 /* Inicio Banner */
 .banner {
   background-image: url("./img-home/banner-photo.jpg");
-  background-image: url("./img-home/banner-photo.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -134,6 +132,31 @@ body, html {
   font-size: 1.9em;
   line-height: 1.5em;
   text-align: left;
+}
+
+
+.curriculo-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #000;
+  transition: transform 0.2s ease;
+}
+
+.curriculo-banner:hover {
+  transform: scale(1.05);
+}
+
+.curriculo-banner img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 /* FIM BANNER */
