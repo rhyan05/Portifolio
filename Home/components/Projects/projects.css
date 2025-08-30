@@ -15,15 +15,37 @@
 /* GRID */
 .projects-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2rem; }
 .project-card{ background:var(--color-white); border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,.1); display:flex; flex-direction:column; transition:.3s ease; }
-.project-card:hover{ transform:translateY(-8px); box-shadow:0 8px 20px rgba(0,0,0,.2); }
+.project-card:hover{ 
+  transform:translateY(-12px) scale(1.02); 
+  box-shadow:0 12px 40px rgba(0,0,0,.15);
+  border: 2px solid rgba(0, 255, 204, 0.3);
+}
 .project-image{ position:relative; width:100%; height:180px; overflow:hidden; }
 .project-image img{ width:100%; height:100%; object-fit:cover; transition:.3s ease; }
-.project-card:hover .project-image img{ transform:scale(1.05); }
+.project-card:hover .project-image img{ transform:scale(1.08) rotate(1deg); }
 .project-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.5); display:flex; justify-content:center; align-items:center; opacity:0; transition:.3s ease; }
 .project-card:hover .project-overlay{ opacity:1; }
-.project-link{ display:flex; justify-content:center; align-items:center; width:48px; height:48px; background:var(--color-white); border-radius:50%; transition:.3s ease; }
-.project-link:hover{ transform:scale(1.1); }
+.project-link{ 
+  display:flex; 
+  justify-content:center; 
+  align-items:center; 
+  width:56px; 
+  height:56px; 
+  background:linear-gradient(135deg, var(--color-white), #f0f9ff); 
+  border-radius:50%; 
+  transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.project-link:hover{ 
+  transform:scale(1.2) rotate(10deg); 
+  background: linear-gradient(135deg, var(--color-mint), var(--color-white));
+  box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+}
 .project-link svg{ stroke:var(--color-dark_blue); }
+.project-link:hover svg{ 
+  stroke: var(--color-dark_blue);
+  filter: drop-shadow(0 0 5px rgba(12, 81, 141, 0.5));
+}
 /* CONTENT */
 .project-content{ padding:20px; display:flex; flex-direction:column; gap:12px; flex:1; }
 .project-title{ font-size:1.3rem; font-weight:700; }

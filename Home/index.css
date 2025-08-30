@@ -1507,25 +1507,50 @@ section {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: var(--color-dark_blue);
+  background: linear-gradient(135deg, var(--color-dark_blue), var(--color-blue));
   color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   border: none;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
+  box-shadow: 0 4px 20px rgba(12, 81, 141, 0.3);
+  transform: scale(0.8) translateY(20px);
 }
+
 #backToTop.show {
   opacity: 1;
   visibility: visible;
+  transform: scale(1) translateY(0);
+}
+
+#backToTop:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 8px 30px rgba(12, 81, 141, 0.5);
+  background: linear-gradient(135deg, var(--color-blue), var(--color-mint));
+}
+
+#backToTop:active {
+  transform: scale(0.95) translateY(0);
+}
+
+/* Animação de pulso quando aparece */
+@keyframes backToTopPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#backToTop.show {
+  animation: backToTopPulse 0.6s ease-out;
 }
 
 @media (max-width: 768px) {
