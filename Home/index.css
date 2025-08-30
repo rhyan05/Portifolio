@@ -666,35 +666,30 @@ body, html {
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  .nav-menu {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: var(--color-dark_blue);
-    position: absolute;
-    top: 60px;
-    left: 0;
-    padding: 10px 0;
-  }
-
-  .nav-menu.open {
-    display: flex;
-  }
-
-  /* Corrige conflito de exibição do menu em telas menores: garante que o menu fique oculto até ser aberto */
+  /* MOBILE NAV (apenas telas <=1024px) */
   @media (max-width: 1024px) {
     .nav-menu {
-      display: none !important;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      flex-direction: column;
+      background-color: var(--color-dark_blue);
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
     }
     .nav-menu.open {
-      display: flex !important;
+      max-height: 400px;
+      opacity: 1;
     }
-  }
-
-  .nav-list {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+    .nav-list {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+    }
   }
 }
 /* -------------- END MOBILE MENU -------------- */
@@ -1381,6 +1376,12 @@ section {
 .nav-list {
   gap: 40px;
 }
+/* ícones na navbar (ex: LinkedIn) */
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
 .nav-link {
   font-size: 1.15rem;
   padding: 4px 0;
@@ -1418,6 +1419,8 @@ section {
 /* === NAVBAR LAYOUT IMPROVEMENTS (desktop) === */
 .site-header {
   background: rgba(6, 40, 70, 0.95); /* Fundo mais escuro que combina com o banner */
+  /* animação suave no hide/show via transform */
+  transition: transform 0.4s ease;
 }
 
 .header-container {
@@ -1425,7 +1428,7 @@ section {
   width: 100%;
   display: flex;
   align-items: center;
-  /* garante que o título fique à esquerda e o menu se expanda */
+  justify-content: space-between; /* logo à esquerda, menu à direita */
 }
 
 .logo {
@@ -1434,9 +1437,9 @@ section {
 
 /* o menu ocupa o espaço restante e centraliza os itens */
 .nav-menu {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* itens alinhados à direita */
 }
 
 /* fonte maior apenas em telas de desktop */
@@ -1507,25 +1510,39 @@ section {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  width: 44px;
-  height: 44px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: var(--color-dark_blue);
+  /* mesmo estilo visual do navbar */
+  background: rgba(6, 40, 70, 0.95);
+  backdrop-filter: blur(6px);
   color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   border: none;
   cursor: pointer;
+  /* animação de entrada/saída */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
   z-index: 1000;
 }
 #backToTop.show {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* hover e click */
+#backToTop:hover {
+  transform: translateY(0) scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+#backToTop:active {
+  transform: translateY(0) scale(0.95);
 }
 
 @media (max-width: 768px) {
@@ -1547,26 +1564,5 @@ section {
   }
   .mobile-menu-toggle {
     margin-left: auto;
-  }
-}
-
-@media (max-width: 1024px) {
-  .nav-menu {
-    /* configuração padrão para animação */
-    display: flex;             /* mantém flex para calcular altura interna */
-    flex-direction: column;
-    width: 100%;
-    background-color: var(--color-mobile_menu_bg);
-    position: absolute;
-    top: 60px;
-    left: 0;
-    overflow: hidden;
-    max-height: 0;             /* escondido inicialmente */
-    opacity: 0;
-    transition: max-height 0.35s ease, opacity 0.35s ease;
-  }
-  .nav-menu.open {
-    max-height: 500px;         /* valor grande suficiente para caber links */
-    opacity: 1;
   }
 }

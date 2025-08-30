@@ -1,9 +1,0 @@
-/* ------------------ ABOUT ------------------ */
-:root { --color-card: #f8f9fa; --color-white:#ffffff; }
-.about{ background-color: var(--color-card); padding:60px 0; }
-.about-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; }
-.about-card{ background-color:var(--color-white); border-radius:20px; padding:30px 20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); display:flex; flex-direction:column; align-items:center; text-align:center; transition:transform .3s ease, box-shadow .3s ease; cursor:pointer; }
-.about-card:hover{ transform:scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
-.card-icon img{ width:80px; height:80px; margin-bottom:20px; }
-.card-title{ font-size:1.3rem; font-weight:600; margin-bottom:12px; }
-.card-description{ font-size:1rem; line-height:1.6em; color:#333; }

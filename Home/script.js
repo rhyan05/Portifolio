@@ -64,14 +64,16 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       header.style.transform = "translateY(0)";
     }
-    lastScroll = current;
 
-    // back to top visibility
-    if (current < lastScroll && current > 400) {
+    // exibe o botão somente quando o usuário começar a SUBIR a página (mesma regra do navbar)
+    if (current < lastScroll && current > 150) {
       backToTop.classList.add("show");
     } else {
       backToTop.classList.remove("show");
     }
+
+    // atualiza lastScroll após verificações
+    lastScroll = current;
   });
 
   backToTop.addEventListener("click", () => {
