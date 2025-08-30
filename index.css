@@ -104,7 +104,7 @@ body, html {
   justify-content: center;
   max-width: 1000px;
   width: 100%;
-  flex-wrap: wrap; /* para mobile não quebrar feio */
+  flex-wrap: wrap; 
 }
 
 .info-left {
@@ -413,7 +413,7 @@ body, html {
 }
 
 .footer-container {
-  background-color: #593f3f; /* Cor mais clara */
+  background-color: #593f3f; 
   width: 100%;
   border-radius: 12px;
   padding: 1.5rem;
@@ -477,7 +477,6 @@ body, html {
 
 
 /* Fim footer */
-/* Textos e imagnes configurações GLOBAIS */
 
 .title-skill{
   display: flex;
@@ -639,7 +638,7 @@ body, html {
     word-break: break-word;
   }
 
-  /* ---------------- MOBILE MENU ---------------- */
+  /*  MOBILE MENU  */
   .mobile-menu-toggle {
     display: flex;
     flex-direction: column;
@@ -655,7 +654,6 @@ body, html {
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
-  /* animação quando aberto */
   .mobile-menu-toggle.open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
@@ -666,7 +664,7 @@ body, html {
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* MOBILE NAV (apenas telas <=1024px) */
+  /* MOBILE NAV */
   @media (max-width: 1024px) {
     .nav-menu {
       position: absolute;
@@ -692,7 +690,7 @@ body, html {
     }
   }
 }
-/* -------------- END MOBILE MENU -------------- */
+/*  END MOBILE MENU  */
 
 @media (max-width: 600px) {
   .footer {
@@ -705,7 +703,7 @@ body, html {
   }
 }
 
-/* ==================== NAVBAR (ajustes) ==================== */
+/* Navbar */
 .site-header {
   position: fixed;
   top: 0;
@@ -713,7 +711,7 @@ body, html {
   width: 100%;
   display: flex;
   justify-content: center;
-  background: rgba(12, 81, 141, 0.9); /* var(--color-dark_blue) com transparência */
+  background: rgba(12, 81, 141, 0.9); 
   backdrop-filter: blur(6px);
   padding: 12px 40px;
   z-index: 1000;
@@ -740,7 +738,6 @@ body {
   font-size: 1.05rem;
   transition: color 0.3s ease;
 }
-/* underline animado */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -759,20 +756,17 @@ body {
 .nav-link.active::after {
   width: 100%;
 }
-/* LOGO */
 .title {
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--color-white);
 }
-/* Mobile menu harmonizado */
 .mobile-menu-toggle span {
   background: var(--color-white);
 }
 
-/* ==================== FOOTER (estilização avançada) ==================== */
 .footer {
-  background: #1f2937; /* slate-800 */
+  background: #1f2937; 
   color: var(--color-white);
   padding: 3rem 0;
 }
@@ -785,7 +779,7 @@ body {
 .footer-info p {
   margin: 0;
   font-size: 0.95rem;
-  color: #e5e7eb; /* slate-200 */
+  color: #e5e7eb;
 }
 .footer-info strong {
   color: var(--color-mint);
@@ -794,7 +788,7 @@ body {
   font-style: italic;
 }
 
-/* ==================== CONTATO (estilização extra) ==================== */
+/*  CONTATO  */
 .contact {
   background: linear-gradient(180deg, var(--color-card) 0%, #e0e9ff 100%);
   padding: 80px 0;
@@ -822,17 +816,6 @@ body {
   }
 }
 
-/* ==================== NAVBAR ==================== */
-/* (mantém regras existentes, apenas marcador sem alterar estilos) */
-/* ==================== BANNER (HERO) ==================== */
-/* (comentário de separação já adicionado anteriormente) */
-/* ==================== SOBRE_MIM (ABOUT) ==================== */
-/* (já presente acima) */
-/* ==================== SKILLS ==================== */
-/* (já presente acima) */
-/* ==================== PROJETOS ==================== */
-/* (já presente acima) */
-/* ==================== CONTATO ==================== */
 .contact {
   background-color: var(--color-card);
   padding: 60px 0;
@@ -892,7 +875,7 @@ body {
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
-/* ==================== FOOTER ==================== */
+/*  FOOTER  */
 .footer {
   width: 100%;
   background-color: #2c2b2b;
@@ -914,12 +897,7 @@ body {
   }
 }
 
-/* ==================== AJUSTES DE COMPATIBILIDADE ==================== */
-/* As seções a seguir foram criadas para compatibilizar o HTML atual
-   (que utiliza classes como .hero, .about, .skills, etc.) com o CSS
-   existente, evitando a necessidade de renomear todo o markup. */
-
-/* ------------------ HERO / BANNER ------------------ */
+/*  HERO / BANNER  */
 .hero {
   background-image: url("./img-home/banner-photo.jpg");
   background-size: cover;
@@ -1033,9 +1011,9 @@ body {
   font-weight: 600;
 }
 
-/* ------------------ SECTION GENÉRICA ------------------ */
+/*  SECTION GENÉRICA  */
 section {
-  scroll-margin-top: 80px; /* melhora âncoras */
+  scroll-margin-top: 80px; 
 }
 .container {
   max-width: 1200px;
@@ -1056,7 +1034,7 @@ section {
   margin-top: 8px;
 }
 
-/* ------------------ ABOUT ------------------ */
+/*  ABOUT  */
 .about {
   background-color: var(--color-card);
   padding: 60px 0;
@@ -1098,7 +1076,7 @@ section {
   color: #333;
 }
 
-/* ------------------ SKILLS ------------------ */
+/*  SKILLS  */
 .skills {
   background-color: var(--color-card);
   padding: 60px 0;
@@ -1118,12 +1096,11 @@ section {
   font-weight: 600;
   text-align: center;
 }
-/* === VISUAL MELHORIA: Skills Grid === */
 .skills-grid {
-  display: flex;            /* usa flex para fácil centralização */
-  flex-wrap: wrap;          /* quebra em várias linhas */
-  gap: 40px;                /* espaçamento uniforme */
-  justify-content: center;  /* centraliza qualquer linha incompleta */
+  display: flex;            
+  flex-wrap: wrap;         
+  gap: 40px;                
+  justify-content: center;  
   padding: 10px 0;
 }
 
@@ -1135,7 +1112,6 @@ section {
   align-items: center;
   justify-content: center;
 }
-/* mobile: usa grid novamente p/ melhor preenchimento */
 @media (max-width: 600px) {
   .skills-grid {
     display: grid;
@@ -1170,7 +1146,6 @@ section {
   background-color: #22c55e;
 }
 
-/* ------------------ RESPONSIVO HERO ------------------ */
 @media (max-width: 768px) {
   .hero {
     min-height: 500px;
@@ -1185,7 +1160,6 @@ section {
   }
 }
 
-/* ------------------ PROJECTS ------------------ */
 .projects {
   background-color: var(--color-card);
   padding: 60px 0;
@@ -1372,11 +1346,9 @@ section {
   }
 }
 
-/* ===== NAVBAR refinamento ===== */
 .nav-list {
   gap: 40px;
 }
-/* ícones na navbar (ex: LinkedIn) */
 .nav-icon {
   width: 20px;
   height: 20px;
@@ -1395,7 +1367,6 @@ section {
   }
 }
 
-/* ===== CONTACT refinamento ===== */
 .contact-info h3 {
   font-size: 2.2rem;
 }
@@ -1416,10 +1387,8 @@ section {
   gap: 10px;
 }
 
-/* === NAVBAR LAYOUT IMPROVEMENTS (desktop) === */
 .site-header {
-  background: rgba(6, 40, 70, 0.95); /* Fundo mais escuro que combina com o banner */
-  /* animação suave no hide/show via transform */
+  background: rgba(6, 40, 70, 0.95);
   transition: transform 0.4s ease;
 }
 
@@ -1428,77 +1397,66 @@ section {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo à esquerda, menu à direita */
+  justify-content: space-between; 
 }
 
 .logo {
   flex: 0 0 auto;
 }
 
-/* o menu ocupa o espaço restante e centraliza os itens */
 .nav-menu {
   flex: 0 0 auto;
   display: flex;
-  justify-content: flex-end; /* itens alinhados à direita */
+  justify-content: flex-end; 
 }
 
-/* fonte maior apenas em telas de desktop */
 @media (min-width: 1025px) {
   .nav-link {
     font-size: 1.25rem;
   }
 }
 
-/* === AJUSTES ADICIONAIS NAVBAR & HERO === */
-/* Remove gap visual entre header fixo e hero */
 .hero {
-  margin-top: -70px; /* altura do header */
+  margin-top: -70px; 
 }
 
-/* Logo ainda mais à esquerda */
 .site-header {
-  padding-left: 0; /* elimina o padding lateral esquerdo */
+  padding-left: 0;
 }
 
-/* Destaque no nome (logo) */
 .title {
   color: var(--color-mint);
   font-size: 1.6rem;
   font-weight: 700;
 }
 
-/* === AJUSTE: Tamanho de título e espaçamento Skills === */
 .category-title {
-  font-size: 2.2rem; /* maior destaque */
+  font-size: 2.2rem; 
 }
 
 .skill-name {
-  font-size: 1.25rem; /* aumento do nome da skill */
-  margin-bottom: 14px; /* maior dist entre nome e badge */
+  font-size: 1.25rem;
+  margin-bottom: 14px;
 }
 
-/* === AJUSTE: projetos centralizados e 3 por linha === */
 .projects-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: center; /* centraliza linhas incompletas */
+  justify-content: center; 
 }
 
-/* largura fixa ~calc, para gerar 3 cards por linha no desktop (≥1024px) */
 .project-card {
-  flex: 0 0 calc((100% - 4rem) / 3); /* 2 gaps de 2rem por linha */
-  max-width: 350px; /* impede esticar demais em telas largas */
+  flex: 0 0 calc((100% - 4rem) / 3); 
+  max-width: 350px; 
 }
 
-/* tablet: 2 por linha */
 @media (max-width: 900px) {
   .project-card {
     flex: 0 0 calc((100% - 2rem) / 2);
   }
 }
 
-/* mobile: 1 por linha */
 @media (max-width: 600px) {
   .project-card {
     flex: 0 0 100%;
@@ -1510,39 +1468,20 @@ section {
   position: fixed;
   right: 20px;
   bottom: 20px;
-<<<<<<< HEAD:index.css
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  /* mesmo estilo visual do navbar */
-  background: rgba(6, 40, 70, 0.95);
-  backdrop-filter: blur(6px);
-=======
   width: 56px;
   height: 56px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--color-dark_blue), var(--color-blue));
->>>>>>> main:Home/index.css
   color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
-<<<<<<< HEAD:index.css
-  font-size: 2rem;
-=======
   font-size: 1.8rem;
->>>>>>> main:Home/index.css
   border: none;
   cursor: pointer;
-  /* animação de entrada/saída */
   opacity: 0;
   visibility: hidden;
-<<<<<<< HEAD:index.css
-  transform: translateY(20px) scale(0.9);
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-=======
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
->>>>>>> main:Home/index.css
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(12, 81, 141, 0.3);
   transform: scale(0.8) translateY(20px);
@@ -1551,18 +1490,6 @@ section {
 #backToTop.show {
   opacity: 1;
   visibility: visible;
-<<<<<<< HEAD:index.css
-  transform: translateY(0) scale(1);
-}
-
-/* hover e click */
-#backToTop:hover {
-  transform: translateY(0) scale(1.1);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-#backToTop:active {
-  transform: translateY(0) scale(0.95);
-=======
   transform: scale(1) translateY(0);
 }
 
@@ -1585,16 +1512,15 @@ section {
 
 #backToTop.show {
   animation: backToTopPulse 0.6s ease-out;
->>>>>>> main:Home/index.css
 }
 
 @media (max-width: 768px) {
   body {
-    padding-top: 0; /* remove espaço externo */
+    padding-top: 0; 
   }
   .hero {
-    margin-top: 0;  /* evita que o header fixe sobre a hero ao carregar em mobile */
-    padding-top: 70px; /* mantém compensação da altura do header */
+    margin-top: 0;  
+    padding-top: 70px; 
   }
   .site-header {
     padding: 10px 16px;

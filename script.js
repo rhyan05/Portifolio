@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* ------------------------- PROJETOS: FILTRO & BUSCA ------------------------- */
+  /* Projetos: Filtro & Busca */
   const projectCards = document.querySelectorAll(".project-card");
   const filterButtons = document.querySelectorAll(".filter-btn");
   const searchInput = document.getElementById("projectSearch");
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Digitação no campo de busca
   searchInput.addEventListener("input", applyFilters);
 
-  /* ------------------------------ MENU MOBILE ------------------------------ */
+  /* Menu Mobile */
   const mobileToggle = document.querySelector(".mobile-menu-toggle");
   const navMenu = document.querySelector(".nav-menu");
 
@@ -79,4 +79,4 @@ document.addEventListener("DOMContentLoaded", () => {
   backToTop.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-}); 
+});
