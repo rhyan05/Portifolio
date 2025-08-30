@@ -1510,29 +1510,48 @@ section {
   position: fixed;
   right: 20px;
   bottom: 20px;
+<<<<<<< HEAD:index.css
   width: 60px;
   height: 60px;
   border-radius: 50%;
   /* mesmo estilo visual do navbar */
   background: rgba(6, 40, 70, 0.95);
   backdrop-filter: blur(6px);
+=======
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-dark_blue), var(--color-blue));
+>>>>>>> main:Home/index.css
   color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD:index.css
   font-size: 2rem;
+=======
+  font-size: 1.8rem;
+>>>>>>> main:Home/index.css
   border: none;
   cursor: pointer;
   /* animação de entrada/saída */
   opacity: 0;
   visibility: hidden;
+<<<<<<< HEAD:index.css
   transform: translateY(20px) scale(0.9);
   transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+=======
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+>>>>>>> main:Home/index.css
   z-index: 1000;
+  box-shadow: 0 4px 20px rgba(12, 81, 141, 0.3);
+  transform: scale(0.8) translateY(20px);
 }
+
 #backToTop.show {
   opacity: 1;
   visibility: visible;
+<<<<<<< HEAD:index.css
   transform: translateY(0) scale(1);
 }
 
@@ -1543,6 +1562,30 @@ section {
 }
 #backToTop:active {
   transform: translateY(0) scale(0.95);
+=======
+  transform: scale(1) translateY(0);
+}
+
+#backToTop:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 8px 30px rgba(12, 81, 141, 0.5);
+  background: linear-gradient(135deg, var(--color-blue), var(--color-mint));
+}
+
+#backToTop:active {
+  transform: scale(0.95) translateY(0);
+}
+
+/* Animação de pulso quando aparece */
+@keyframes backToTopPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#backToTop.show {
+  animation: backToTopPulse 0.6s ease-out;
+>>>>>>> main:Home/index.css
 }
 
 @media (max-width: 768px) {
