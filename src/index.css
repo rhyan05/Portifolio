@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #106ebe;
+  --color-mint: #0ffcbe;
+  --color-navy: #0c518d;
+  --color-surface: #f4f4f4;
+  --font-sans: "Inter", "Poppins", system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    padding-top: 70px;
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+    color: #333;
+    background-color: #fff;
+  }
+
+  @media (max-width: 767px) {
+    body {
+      padding-top: 0;
+    }
+  }
+
+  section {
+    scroll-margin-top: 80px;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-[10px] px-6 py-3 text-base font-semibold transition-transform duration-200 hover:scale-105;
+  }
+
+  .btn img {
+    @apply h-6 w-6 object-contain;
+  }
+
+  .btn-primary {
+    @apply bg-white text-black shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-navy text-white;
+  }
+
+  .nav-link {
+    position: relative;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 500;
+    padding: 4px 0;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-mint);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-mint);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+}
+
+@keyframes backToTopPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
