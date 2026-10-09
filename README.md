@@ -1,25 +1,46 @@
 # Portfólio
-Bem-vindo ao repositório do meu portfólio! Este projeto foi desenvolvido utilizando **HTML** e **CSS** para apresentar meus projetos, habilidades e experiências de forma profissional e intuitiva.
 
-## 🌟 Visão Geral
-O objetivo deste portfólio é fornecer uma plataforma online para exibir meus trabalhos, demonstrar minhas habilidades em desenvolvimento web e facilitar o contato com possíveis empregadores ou clientes.
+Portfólio pessoal de **Rhyan Lemos** apresentando projetos, habilidades e formas de contato.
 
-## 🚀 Tecnologias Utilizadas
-- **HTML**: Estruturação das páginas.
-- **CSS**: Estilização e design responsivo.
+## Tecnologias
 
-## 📂 Estrutura do Projeto
-- **`index.html`**: Página principal do portfólio.
-- **`css/`**: Diretório contendo os arquivos de estilo.
-- **`img/`**: Diretório contendo imagens utilizadas no portfólio (se aplicável).
+- **React 19** + **TypeScript**
+- **Vite** (build e dev server)
+- **Tailwind CSS v4** (via `@tailwindcss/vite`)
 
-## 🎨 Funcionalidades
-- Design responsivo para diferentes dispositivos.
-- Seções organizadas, como:
-  - **Sobre Mim**: Uma breve introdução e descrição pessoal.
-  - **Projetos**: Galeria dos meus projetos com links para visualização.
-  - **Habilidades**: Lista das minhas principais competências técnicas.
-  - **Contato**: Formulário ou informações para entrar em contato.
+## Estrutura
 
-## 🌐 Demonstração
-Caso o projeto esteja publicado, você pode acessar [aqui](https://portifolio-e232-83ywbv1he-rhyans-projects-36b8ad89.vercel.app/)
+```
+index.html              → entry do Vite
+public/img-home/        → imagens (referenciadas como /img-home/...)
+src/
+  main.tsx              → bootstrap do React
+  App.tsx               → composição das seções
+  index.css             → Tailwind + tokens de tema + keyframes
+  types.ts              → tipos (Project, Skill, ...)
+  data/                 → conteúdo (projetos, skills, certificações e palestras)
+  components/           → Header, Hero, About, Skills, Certifications, Projects, Talks, Contact, Footer, BackToTop
+  hooks/                → useScrollDirection
+```
+
+## Comandos
+
+```bash
+npm install       # instala dependências
+npm run dev       # ambiente de desenvolvimento (http://localhost:5173)
+npm run build     # type-check + build de produção em dist/
+npm run preview   # pré-visualiza o build de produção
+```
+
+## Funcionalidades
+
+- Design responsivo.
+- Busca e filtro de projetos por categoria (Front-end, Back-end, Machine Learning).
+- Seção de certificações com os certificados em destaque.
+- Seção de palestras e eventos, com destaque para o Febraban Tech.
+- Menu mobile com animação.
+- Navbar que oculta/mostra conforme o scroll e botão "voltar ao topo".
+
+## Demonstração
+
+[portifolio](https://portifolio-e232-83ywbv1he-rhyans-projects-36b8ad89.vercel.app/)
