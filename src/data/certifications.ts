@@ -38,7 +38,7 @@ export const certifications: Certification[] = [
   {
     title: "Azure Pipelines — CI/CD, Docker e Kubernetes no Azure DevOps",
     issuer: "Microsoft · DIO",
-    year: "2025",
+    year: "10/2026",
     image: "/img-home/certifications/azure-pipelines-cicd.jpg",
     category: "cloud",
   },
@@ -47,13 +47,6 @@ export const certifications: Certification[] = [
     issuer: "Microsoft · DIO",
     year: "2025",
     image: "/img-home/certifications/dio-azure-functions.jpg",
-    category: "cloud",
-  },
-  {
-    title: "Explorando o Serviço de Aplicativo do Azure",
-    issuer: "Microsoft · DIO",
-    year: "2025",
-    image: "/img-home/certifications/dio-servico-aplicativo-azure.jpg",
     category: "cloud",
   },
   {
@@ -68,13 +61,6 @@ export const certifications: Certification[] = [
     issuer: "Microsoft · DIO",
     year: "2025",
     image: "/img-home/certifications/dio-imagens-container-azure.jpg",
-    category: "cloud",
-  },
-  {
-    title: "Explorar a Plataforma de Identidade da Microsoft",
-    issuer: "Microsoft · DIO",
-    year: "2025",
-    image: "/img-home/certifications/dio-identidade-microsoft.jpg",
     category: "cloud",
   },
   {
