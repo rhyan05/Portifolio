@@ -6,6 +6,7 @@ import { Skills } from "./components/Skills";
 import { Certifications } from "./components/Certifications";
 import { Projects } from "./components/Projects";
 import { Talks } from "./components/Talks";
+import { Presentation } from "./components/Presentation";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { BackToTop } from "./components/BackToTop";
@@ -23,6 +24,7 @@ export default function App() {
         <Certifications />
         <Projects />
         <Talks />
+        <Presentation />
         <Contact />
       </main>
       <Footer />
