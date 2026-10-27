@@ -27,42 +27,44 @@ export function Projects() {
   }, [query, category]);
 
   return (
-    <section id="projects" className="bg-surface py-[60px]">
-      <div className="mx-auto max-w-[1200px] px-5">
-        <SectionHeader title="Projetos" subtitle="Alguns dos projetos que desenvolvi ao longo da minha jornada" />
+    <section id="projects" className="section-shell bg-ink">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 bottom-0 h-[420px] w-[420px] rounded-full bg-violet/10 blur-[130px]"
+      />
 
-        <div className="mb-10 flex flex-col items-center gap-5 max-md:items-stretch">
-          <div className="flex w-full max-w-[400px] items-center gap-2.5 max-md:max-w-none">
+      <div className="relative mx-auto max-w-[1200px] px-5">
+        <SectionHeader
+          eyebrow="Portfólio"
+          title="Projetos"
+          subtitle="Alguns dos projetos que desenvolvi ao longo da minha jornada"
+        />
+
+        <div className="mb-10 flex flex-col items-center gap-5 max-md:items-stretch" data-reveal>
+          <div className="flex w-full max-w-[460px] items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1.5 backdrop-blur-md transition-colors focus-within:border-mint/50 max-md:max-w-none">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </span>
             <input
               type="text"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Buscar por título..."
-              className="flex-1 rounded-lg border-2 border-navy px-3.5 py-2.5 text-base outline-none"
+              aria-label="Buscar projetos por título"
+              className="w-full flex-1 bg-transparent px-1 py-1.5 text-base text-fg outline-none placeholder:text-muted/70"
             />
-            <button
-              type="button"
-              aria-label="Buscar"
-              className="flex items-center justify-center rounded-lg bg-navy p-2.5 transition-colors hover:bg-brand"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-              </svg>
-            </button>
           </div>
 
-          <div className="flex flex-wrap gap-2.5">
+          <div className="flex flex-wrap justify-center gap-2">
             {filters.map((filter) => (
               <button
                 key={filter.value}
                 type="button"
                 onClick={() => setCategory(filter.value)}
-                className={`cursor-pointer rounded-[20px] border-2 border-navy px-4 py-2 font-semibold transition-colors ${
-                  category === filter.value
-                    ? "bg-navy text-white"
-                    : "bg-transparent text-navy hover:bg-navy hover:text-white"
-                }`}
+                className={`filter-pill ${category === filter.value ? "filter-pill-active" : ""}`}
               >
                 {filter.label}
               </button>
@@ -70,11 +72,15 @@ export function Projects() {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
           {filtered.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
         </div>
+
+        {filtered.length === 0 && (
+          <p className="py-10 text-center text-muted">Nenhum projeto encontrado para essa busca.</p>
+        )}
       </div>
     </section>
   );

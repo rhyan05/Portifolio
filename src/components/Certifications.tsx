@@ -32,14 +32,20 @@ export function Certifications() {
   if (certifications.length === 0) return null;
 
   return (
-    <section id="certifications" className="bg-surface py-[60px]">
-      <div className="mx-auto max-w-[1200px] px-5">
+    <section id="certifications" className="section-shell bg-night">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 top-24 h-[420px] w-[420px] rounded-full bg-magenta/10 blur-[130px]"
+      />
+
+      <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
+          eyebrow="Aprendizado contínuo"
           title="Certificações"
           subtitle="Cursos e certificações que reforçam minhas habilidades técnicas"
         />
 
-        <div className="mb-10 flex flex-wrap justify-center gap-2.5">
+        <div className="mb-10 flex flex-wrap justify-center gap-2" data-reveal>
           {filters.map((filter) => (
             <button
               key={filter.value}
@@ -48,42 +54,39 @@ export function Certifications() {
                 setCategory(filter.value);
                 reset();
               }}
-              className={`cursor-pointer rounded-[20px] border-2 border-navy px-4 py-2 font-semibold transition-colors ${
-                category === filter.value
-                  ? "bg-navy text-white"
-                  : "bg-transparent text-navy hover:bg-navy hover:text-white"
-              }`}
+              className={`filter-pill ${category === filter.value ? "filter-pill-active" : ""}`}
             >
               {filter.label}
             </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-8">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6" data-reveal>
           {filtered.slice(0, visible).map((cert) => (
             <article
               key={cert.title}
-              className="group flex flex-col overflow-hidden rounded-[16px] bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              className="group glass flex flex-col overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1.5 hover:border-mint/30 hover:shadow-[0_24px_60px_-28px_rgba(46,242,182,0.5)]"
             >
               <button
                 type="button"
                 onClick={() => setPreview(cert)}
                 aria-label={`Ampliar certificado: ${cert.title}`}
-                className="flex h-[200px] cursor-zoom-in items-center justify-center bg-[#eef1f6] p-3"
+                className="relative flex h-[190px] cursor-zoom-in items-center justify-center overflow-hidden bg-gradient-to-br from-[#eef2f8] to-[#d9e3f0] p-4"
               >
                 <img
                   src={cert.image}
                   alt={cert.title}
                   loading="lazy"
-                  className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="max-h-full max-w-full rounded-lg object-contain shadow-sm transition-transform duration-500 group-hover:scale-105"
                 />
+                <span className="absolute inset-0 bg-gradient-to-t from-night/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </button>
-              <div className="flex flex-1 flex-col gap-1 p-5">
-                <span className="text-[0.8rem] font-semibold uppercase tracking-wide text-brand">
+              <div className="flex flex-1 flex-col gap-1.5 p-5">
+                <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-mint">
                   {cert.issuer}
                 </span>
-                <h3 className="text-[1.05rem] font-bold leading-snug">{cert.title}</h3>
-                {cert.year && <span className="mt-auto pt-2 text-[0.85rem] text-[#6b7280]">{cert.year}</span>}
+                <h3 className="text-[1.02rem] font-semibold leading-snug text-fg">{cert.title}</h3>
+                {cert.year && <span className="mt-auto pt-2 text-[0.8rem] text-muted">{cert.year}</span>}
               </div>
             </article>
           ))}
