@@ -1,6 +1,4 @@
-export const presentationUrl = encodeURI(
-  "/img-home/apresentacoes/Cópia de me apresentando - slide 2 novo(2).pptx.pptx",
-);
+export const presentationUrl = "/img-home/apresentacoes/rhyan-lemos-apresentacao.pptx";
 
 export type SlideVariant =
   | "cover"

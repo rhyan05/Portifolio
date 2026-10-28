@@ -254,7 +254,7 @@ export function Presentation() {
               <a
                 href={presentationUrl}
                 download="Rhyan-Lemos-Apresentacao.pptx"
-                title="Baixar apresentação original em PowerPoint"
+                title="Baixar apresentação em PowerPoint"
                 className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[0.72rem] font-semibold uppercase tracking-wide text-muted transition-colors hover:bg-white/10 hover:text-mint"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -289,7 +289,7 @@ export function Presentation() {
                 download="Rhyan-Lemos-Apresentacao.pptx"
                 className="hidden items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[0.8rem] font-semibold text-fg transition-colors hover:border-mint/40 hover:text-mint sm:inline-flex"
               >
-                Baixar PPTX original
+                Baixar apresentação (.pptx)
               </a>
               <button
                 type="button"
