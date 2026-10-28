@@ -414,7 +414,7 @@ function TrajectorySlide() {
                     ))}
                   </ul>
                   <div className="mt-auto flex flex-wrap gap-1 pt-2">
-                    {entry.tags?.slice(0, 4).map((tag) => (
+                    {entry.tags?.map((tag) => (
                       <span
                         key={tag}
                         className="rounded border border-white/10 bg-white/5 px-1 py-0.5 text-[6px] text-muted"

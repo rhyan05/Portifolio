@@ -637,9 +637,11 @@ function addTrajectory() {
     });
 
     if (entry.tags && entry.tags.length > 0) {
-      addText(slide, entry.tags.slice(0, 4).join("  ·  "), x + 12, 508, columnWidth - 24, 20, {
-        fontSize: fs(7),
+      addText(slide, entry.tags.join(" · "), x + 12, 496, columnWidth - 24, 40, {
+        fontSize: fs(6.5),
         color: C.muted,
+        lineSpacing: fs(8),
+        valign: "bottom",
       });
     }
   });
