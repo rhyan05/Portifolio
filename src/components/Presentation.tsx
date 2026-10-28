@@ -5,10 +5,11 @@ import type {
   MouseEvent as ReactMouseEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
-import { presentationSlides, presentationUrl } from "../data/presentation";
+import { deckSlides, presentationUrl } from "../data/presentation";
+import { DeckSlide, SlideCanvas } from "./DeckSlide";
 import { SectionHeader } from "./SectionHeader";
 
-const total = presentationSlides.length;
+const total = deckSlides.length;
 const half = Math.floor(total / 2);
 
 export function Presentation() {
@@ -114,7 +115,7 @@ export function Presentation() {
               onBlur={() => setHovering(false)}
               className="perspective-deck relative mx-auto aspect-[16/9] w-full max-w-[960px] touch-pan-y select-none"
             >
-              {presentationSlides.map((slide, slideIndex) => {
+              {deckSlides.map((slide, slideIndex) => {
                 const rawOffset = (slideIndex - index + total + half) % total;
                 const offset = rawOffset - half;
                 const distance = Math.abs(offset);
@@ -132,38 +133,42 @@ export function Presentation() {
 
                 return (
                   <div
-                    key={slide.src}
+                    key={slide.id}
                     aria-hidden={hidden}
                     style={style}
                     className="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out"
                   >
-                    <button
-                      type="button"
-                      tabIndex={slideIndex === index ? 0 : -1}
-                      onClick={() => {
-                        if (slideIndex === index) {
-                          setOpen(true);
-                        } else {
-                          setIndex(slideIndex);
-                        }
-                      }}
-                      aria-label={
+                    <div
+                      className={`relative aspect-video w-[78%] overflow-hidden rounded-2xl border border-white/15 bg-night shadow-[0_40px_90px_-40px_rgba(0,0,0,0.9)] ${
                         slideIndex === index
-                          ? `Abrir apresentação em tela cheia: ${slide.title}`
-                          : `Ir para o slide ${slideIndex + 1}: ${slide.title}`
-                      }
-                      className={`w-[78%] overflow-hidden rounded-2xl border border-white/15 bg-night shadow-[0_40px_90px_-40px_rgba(0,0,0,0.9)] transition-transform duration-300 ${
-                        slideIndex === index ? "cursor-zoom-in hover:scale-[1.01]" : ""
+                          ? "cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
+                          : ""
                       }`}
                     >
-                      <img
-                        src={slide.src}
-                        alt={slide.alt}
-                        loading={distance <= 1 ? "eager" : "lazy"}
-                        draggable={false}
-                        className="aspect-video h-full w-full object-cover"
+                      <div aria-hidden={slideIndex !== index} className="absolute inset-0">
+                        <SlideCanvas>
+                          <DeckSlide slide={slide} index={slideIndex} />
+                        </SlideCanvas>
+                      </div>
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        onClick={() => {
+                          if (slideIndex === index) {
+                            setOpen(true);
+                          } else {
+                            setIndex(slideIndex);
+                          }
+                        }}
+                        aria-label={
+                          slideIndex === index
+                            ? `Abrir apresentação em tela cheia: ${slide.navTitle}`
+                            : `Ir para o slide ${slideIndex + 1}: ${slide.navTitle}`
+                        }
+                        className="absolute inset-0 z-10"
                       />
-                    </button>
+                    </div>
                   </div>
                 );
               })}
@@ -193,7 +198,7 @@ export function Presentation() {
 
           <div className="mt-8 flex flex-col items-center gap-4">
             <p aria-live="polite" className="text-center text-[0.92rem] text-muted">
-              <span className="font-semibold text-fg">{presentationSlides[index].title}</span>
+              <span className="font-semibold text-fg">{deckSlides[index].navTitle}</span>
               <span className="mx-2 text-white/20">·</span>
               {index + 1} de {total}
             </p>
@@ -218,12 +223,12 @@ export function Presentation() {
               </button>
 
               <div className="flex items-center gap-1 px-1">
-                {presentationSlides.map((slide, slideIndex) => (
+                {deckSlides.map((slide, slideIndex) => (
                   <button
-                    key={slide.src}
+                    key={slide.id}
                     type="button"
                     onClick={() => setIndex(slideIndex)}
-                    aria-label={`Ir para o slide ${slideIndex + 1}`}
+                    aria-label={`Ir para o slide ${slideIndex + 1}: ${slide.navTitle}`}
                     aria-current={slideIndex === index}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       slideIndex === index ? "w-6 bg-mint" : "w-1.5 bg-white/25 hover:bg-white/50"
@@ -249,6 +254,7 @@ export function Presentation() {
               <a
                 href={presentationUrl}
                 download="Rhyan-Lemos-Apresentacao.pptx"
+                title="Baixar apresentação original em PowerPoint"
                 className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[0.72rem] font-semibold uppercase tracking-wide text-muted transition-colors hover:bg-white/10 hover:text-mint"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -274,7 +280,7 @@ export function Presentation() {
             <div className="min-w-0">
               <p className="text-[0.7rem] uppercase tracking-[0.18em] text-mint">Apresentação</p>
               <p className="truncate font-display text-[1.05rem] font-semibold text-fg">
-                {presentationSlides[index].title}
+                {deckSlides[index].navTitle}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
@@ -283,7 +289,7 @@ export function Presentation() {
                 download="Rhyan-Lemos-Apresentacao.pptx"
                 className="hidden items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[0.8rem] font-semibold text-fg transition-colors hover:border-mint/40 hover:text-mint sm:inline-flex"
               >
-                Baixar PPTX
+                Baixar PPTX original
               </a>
               <button
                 type="button"
@@ -309,11 +315,11 @@ export function Presentation() {
               </svg>
             </button>
 
-            <img
-              src={presentationSlides[index].src}
-              alt={presentationSlides[index].alt}
-              className="max-h-full max-w-full rounded-xl border border-white/10 object-contain shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]"
-            />
+            <div className="relative h-full w-full max-w-[1280px] overflow-hidden rounded-xl border border-white/10 bg-night/40 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]">
+              <SlideCanvas>
+                <DeckSlide slide={deckSlides[index]} index={index} />
+              </SlideCanvas>
+            </div>
 
             <button
               type="button"
@@ -329,12 +335,12 @@ export function Presentation() {
 
           <div className="border-t border-white/10 px-5 py-4">
             <div className="flex gap-2 overflow-x-auto pb-1">
-              {presentationSlides.map((slide, slideIndex) => (
+              {deckSlides.map((slide, slideIndex) => (
                 <button
-                  key={slide.src}
+                  key={slide.id}
                   type="button"
                   onClick={() => setIndex(slideIndex)}
-                  aria-label={`Ir para o slide ${slideIndex + 1}`}
+                  aria-label={`Ir para o slide ${slideIndex + 1}: ${slide.navTitle}`}
                   aria-current={slideIndex === index}
                   className={`shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-300 ${
                     slideIndex === index
@@ -342,13 +348,11 @@ export function Presentation() {
                       : "border-transparent opacity-55 hover:opacity-100"
                   }`}
                 >
-                  <img
-                    src={slide.src}
-                    alt=""
-                    loading="lazy"
-                    className="h-14 w-24 object-cover"
-                    draggable={false}
-                  />
+                  <div className="h-14 w-24" aria-hidden="true">
+                    <SlideCanvas>
+                      <DeckSlide slide={slide} index={slideIndex} />
+                    </SlideCanvas>
+                  </div>
                 </button>
               ))}
             </div>
