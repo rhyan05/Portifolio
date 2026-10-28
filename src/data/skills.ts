@@ -25,12 +25,18 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Banco de Dados & Cloud",
+    title: "Cloud, Dados & DevOps",
     skills: [
       { name: "SQL", icon: "/img-home/icon-skills/database/sql.png", level: "advanced" },
       { name: "MySQL", icon: "/img-home/icon-skills/database/mysql.png", level: "advanced" },
       { name: "AWS", icon: "/img-home/icon-skills/database/aws.png", level: "basic" },
       { name: "Azure", icon: "/img-home/icon-skills/database/azure.png", level: "basic" },
+      {
+        name: "GitHub Actions",
+        icon: "/img-home/icon-skills/devops/github-actions.svg",
+        level: "intermediate",
+      },
+      { name: "CI/CD", icon: "/img-home/icon-skills/devops/cicd.svg", level: "intermediate" },
     ],
   },
 ];
