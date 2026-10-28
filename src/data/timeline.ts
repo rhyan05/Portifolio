@@ -55,7 +55,7 @@ export const timeline: TimelineEntry[] = [
   {
     period: "2025",
     title: "Desenvolvedor Full Stack",
-    company: "REVIO Tecnologia · Jan/2025 – Atual",
+    company: "REVIO Tecnologia · 2025",
     description:
       "Entrei na REVIO como desenvolvedor Full Stack CLT, atuando em desenvolvimento, sustentação e evolução de aplicações.",
     highlights: [
@@ -65,21 +65,20 @@ export const timeline: TimelineEntry[] = [
       "Certificações em Cybersecurity (FIAP) e gestão (FM2S)",
     ],
     tags: ["Full Stack", "PHP", "TypeScript", "CI/CD", "Git"],
-    current: true,
   },
   {
     period: "2026",
-    title: "Próximos passos",
-    company: "Arquitetura e liderança técnica",
+    title: "Consolidação técnica",
+    company: "REVIO Tecnologia · 2026",
     description:
-      "Foco em arquitetura, referência técnica e mentoria, com aprofundamento em cloud, automação e inteligência artificial.",
+      "Atuação full stack com foco em cloud, CI/CD e liderança técnica, aplicando certificações e projetos no dia a dia.",
     highlights: [
-      "Maior atuação em arquitetura e decisões técnicas",
-      "Preparação para referência técnica e mentoria",
-      "Lean Six Sigma Green Belt e Azure DevOps/AZ-204",
-      "CI/CD, cloud e automação",
+      "Certificação Azure Pipelines (10/2026)",
+      "Formação para a Primeira Liderança (FM2S)",
+      "Projetos com React, PHP e automação",
+      "Preparação para arquitetura e mentoria",
     ],
-    tags: ["Arquitetura", "Azure", "CI/CD", "Mentoria"],
-    future: true,
+    tags: ["Azure", "CI/CD", "Liderança", "Arquitetura"],
+    current: true,
   },
 ];
