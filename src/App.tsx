@@ -2,6 +2,7 @@ import { useScrollDirection } from "./hooks/useScrollDirection";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
+import { Trajectory } from "./components/Trajectory";
 import { Skills } from "./components/Skills";
 import { Certifications } from "./components/Certifications";
 import { Projects } from "./components/Projects";
@@ -20,6 +21,7 @@ export default function App() {
       <main>
         <Hero />
         <About />
+        <Trajectory />
         <Skills />
         <Certifications />
         <Projects />

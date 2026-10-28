@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 
 const navItems = [
   { href: "#about-me", label: "Sobre" },
+  { href: "#trajetoria", label: "Trajetória" },
   { href: "#skills", label: "Skills" },
   { href: "#certifications", label: "Certificações" },
   { href: "#projects", label: "Projetos" },
@@ -32,7 +33,7 @@ export function Header({ hidden }: { hidden: boolean }) {
         className="scroll-progress absolute inset-x-0 bottom-0 h-[2px] origin-left bg-gradient-to-r from-mint via-violet to-magenta"
       />
 
-      <div className="relative mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-5 py-3.5 max-md:py-3">
+      <div className="relative mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-5 py-3.5 max-lg:py-3">
         <a
           href="#home"
           className="group flex shrink-0 items-center gap-2 text-[1.45rem] font-bold tracking-tight text-fg"
@@ -47,23 +48,23 @@ export function Header({ hidden }: { hidden: boolean }) {
 
         <nav
           aria-label="Navegação principal"
-          className={`flex items-center max-md:absolute max-md:left-0 max-md:top-full max-md:w-full max-md:overflow-hidden max-md:border-b max-md:border-white/10 max-md:bg-night/95 max-md:backdrop-blur-xl max-md:transition-all max-md:duration-500 ${
-            menuOpen ? "max-md:max-h-[460px] max-md:opacity-100" : "max-md:max-h-0 max-md:opacity-0"
+          className={`flex items-center max-lg:absolute max-lg:left-0 max-lg:top-full max-lg:w-full max-lg:overflow-hidden max-lg:border-b max-lg:border-white/10 max-lg:bg-night/95 max-lg:backdrop-blur-xl max-lg:transition-all max-lg:duration-500 ${
+            menuOpen ? "max-lg:max-h-[500px] max-lg:opacity-100" : "max-lg:max-h-0 max-lg:opacity-0"
           }`}
         >
-          <ul className="flex items-center gap-6 max-md:w-full max-md:flex-col max-md:items-stretch max-md:gap-1 max-md:px-5 max-md:py-4">
+          <ul className="flex items-center gap-6 max-lg:w-full max-lg:flex-col max-lg:items-stretch max-lg:gap-1 max-lg:px-5 max-lg:py-4">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="nav-link block max-md:rounded-lg max-md:px-3 max-md:py-2.5 max-md:text-base"
+                  className="nav-link block max-lg:rounded-lg max-lg:px-3 max-lg:py-2.5 max-lg:text-base"
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
                 </a>
               </li>
             ))}
-            <li className="max-md:hidden">
+            <li className="max-lg:hidden">
               <a
                 href="https://www.linkedin.com/in/rhyan-lemos-silveira/"
                 target="_blank"
@@ -81,7 +82,7 @@ export function Header({ hidden }: { hidden: boolean }) {
           type="button"
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
-          className="hidden cursor-pointer flex-col justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 p-2 max-md:flex"
+          className="hidden cursor-pointer flex-col justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 p-2 max-lg:flex"
           onClick={() => setMenuOpen((open) => !open)}
         >
           <span
