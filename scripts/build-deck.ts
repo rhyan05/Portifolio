@@ -4,13 +4,19 @@ import PptxGenJS from "pptxgenjs";
 import {
   certificateHighlights,
   competencyMatrix,
+  deckSlides,
   email,
   links,
   metrics,
   portfolioUrl,
   profile,
+  projectAccents,
+  projectCategoryLabels,
+  projectCount,
+  projectHighlights,
   roadmap,
   skillGroups,
+  talkHighlights,
 } from "../src/data/presentation";
 import { timeline } from "../src/data/timeline";
 import { certifications } from "../src/data/certifications";
@@ -55,6 +61,7 @@ const accent: Record<string, string> = {
 const UNIT = 13.333 / 1280;
 const u = (px: number) => px * UNIT;
 const fs = (px: number) => px * 0.75;
+const TOTAL_SLIDES = deckSlides.length;
 
 type Slide = ReturnType<typeof pptx.addSlide>;
 
@@ -219,7 +226,7 @@ function addTopBar(slide: Slide, number: number) {
     28,
     { fontSize: fs(18), bold: true, valign: "middle" },
   );
-  addText(slide, `RHYAN LEMOS · ${String(number).padStart(2, "0")} / 10`, 900, 48, 316, 20, {
+  addText(slide, `RHYAN LEMOS · ${String(number).padStart(2, "0")} / ${TOTAL_SLIDES}`, 900, 48, 316, 20, {
     fontSize: fs(10),
     color: C.muted,
     align: "right",
@@ -372,7 +379,7 @@ function addCover() {
     28,
     { fontSize: fs(18), bold: true, valign: "middle" },
   );
-  addText(slide, "01 / 10", 1080, 656, 136, 20, {
+  addText(slide, `01 / ${TOTAL_SLIDES}`, 1080, 656, 136, 20, {
     fontSize: fs(9),
     color: C.muted,
     align: "right",
@@ -538,7 +545,7 @@ function addEvolution() {
     "2023": "FREELANCE",
     "2024": "PROJETOS & IA",
     "2025": "REVIO",
-    "2026": "PRÓXIMOS PASSOS",
+    "2026": "ATUAL",
   };
 
   timeline.forEach((entry, index) => {
@@ -562,7 +569,7 @@ function addEvolution() {
   });
 
   slide.addNotes(
-    "Linha do tempo resumida: 2022 base técnica, 2023 freelance e graduação, 2024 projetos e IA, 2025 REVIO e 2026 próximos passos.",
+    "Linha do tempo resumida: 2022 base técnica, 2023 freelance e graduação, 2024 projetos e IA, 2025 REVIO e 2026 como ano atual.",
   );
 }
 
@@ -638,7 +645,7 @@ function addTrajectory() {
   });
 
   slide.addNotes(
-    "Trajetória em cinco colunas: 2022, 2023, 2024, 2025 na REVIO e 2026 como próximos passos.",
+    "Trajetória em cinco colunas: 2022, 2023, 2024, 2025 na REVIO e 2026 como ano atual.",
   );
 }
 
@@ -676,41 +683,163 @@ function addCertificates() {
   });
 
   certificateHighlights.forEach((certificate, index) => {
-    const x = 450 + (index % 2) * 270;
-    const y = 190 + Math.floor(index / 2) * 210;
-    addCard(slide, x, y, 250, 195, accent[certificate.accent]);
+    const x = 450 + (index % 3) * 260;
+    const y = 190 + Math.floor(index / 3) * 230;
+    addCard(slide, x, y, 245, 215, accent[certificate.accent]);
 
-    addText(slide, certificate.issuer.toUpperCase(), x + 16, y + 16, 200, 14, {
-      fontSize: fs(7),
+    addText(slide, certificate.issuer.toUpperCase(), x + 14, y + 14, 215, 14, {
+      fontSize: fs(6.5),
       color: C.muted,
       charSpacing: 1,
     });
-    addText(slide, certificate.title, x + 16, y + 42, 218, 62, {
-      fontSize: fs(13),
+    addText(slide, certificate.title, x + 14, y + 38, 217, 72, {
+      fontSize: fs(11.5),
       bold: true,
       color: C.fg,
-      lineSpacing: fs(15),
+      lineSpacing: fs(13.5),
     });
-    addText(slide, certificate.description, x + 16, y + 112, 218, 40, {
-      fontSize: fs(8),
+    addText(slide, certificate.description, x + 14, y + 114, 217, 54, {
+      fontSize: fs(7.5),
       color: C.muted,
-      lineSpacing: fs(10),
+      lineSpacing: fs(9),
     });
-    addText(slide, certificate.year, x + 16, y + 164, 100, 16, {
-      fontSize: fs(8),
+    addText(slide, certificate.year, x + 14, y + 184, 100, 14, {
+      fontSize: fs(7.5),
       color: C.muted,
     });
   });
 
   slide.addNotes(
-    `Certificados: ${certifications.length}+ cursos. Destaques em Cybersecurity (FIAP), Azure Pipelines/CI-CD (Microsoft · DIO), Lean Six Sigma (FM2S) e inglês B1 (MET).`,
+    `Certificados: ${certifications.length}+ cursos. Destaques em Cybersecurity (FIAP), Azure Pipelines/CI-CD (Microsoft · DIO), Lean Six Sigma e Primeira Liderança (FM2S), inglês B1 (MET) e Imersão IA (Alura).`,
+  );
+}
+
+function addTalks() {
+  const slide = pptx.addSlide();
+  addBackground(slide);
+  addTopBar(slide, 6);
+  addTitle(
+    slide,
+    "Palestras & eventos",
+    `${talkHighlights.length} eventos, workshops e imersões que acompanhei.`,
+  );
+
+  const highlight = talkHighlights.find((talk) => talk.highlight) ?? talkHighlights[0];
+  const others = talkHighlights.filter((talk) => talk !== highlight);
+
+  addCard(slide, 64, 190, 1152, 96, C.magenta);
+  addText(slide, highlight.event.toUpperCase(), 84, 204, 800, 14, {
+    fontSize: fs(7),
+    color: C.magenta,
+    charSpacing: 1,
+  });
+  addText(slide, highlight.title, 84, 222, 980, 26, {
+    fontSize: fs(16),
+    bold: true,
+    color: C.fg,
+  });
+  if (highlight.description) {
+    addText(slide, highlight.description, 84, 250, 960, 26, {
+      fontSize: fs(8),
+      color: C.muted,
+      lineSpacing: fs(10),
+    });
+  }
+  addText(slide, highlight.year ?? "", 1120, 204, 72, 14, {
+    fontSize: fs(8),
+    color: C.muted,
+    align: "right",
+  });
+
+  others.forEach((talk, index) => {
+    const x = 64 + (index % 2) * 584;
+    const y = 300 + Math.floor(index / 2) * 108;
+
+    addCard(slide, x, y, 568, 96);
+    addText(slide, talk.event.toUpperCase(), x + 16, y + 14, 420, 14, {
+      fontSize: fs(7),
+      color: C.muted,
+      charSpacing: 1,
+    });
+    addText(slide, talk.title, x + 16, y + 32, 500, 36, {
+      fontSize: fs(10),
+      bold: true,
+      color: C.fg,
+      lineSpacing: fs(12),
+    });
+    addText(slide, talk.year ?? "", x + 500, y + 14, 52, 14, {
+      fontSize: fs(8),
+      color: C.muted,
+      align: "right",
+    });
+  });
+
+  slide.addNotes(
+    `Palestras e eventos: ${talkHighlights.map((talk) => talk.title).join("; ")}.`,
+  );
+}
+
+function addProjects() {
+  const slide = pptx.addSlide();
+  addBackground(slide);
+  addTopBar(slide, 7);
+  addTitle(
+    slide,
+    "Projetos em destaque",
+    `${projectHighlights.length} projetos em destaque · ${projectCount} no portfólio.`,
+  );
+
+  projectHighlights.forEach((project, index) => {
+    const x = 64 + (index % 3) * 392;
+    const y = 190 + Math.floor(index / 3) * 220;
+    const color = accent[projectAccents[project.category]];
+
+    addCard(slide, x, y, 368, 205, color);
+    addText(
+      slide,
+      projectCategoryLabels[project.category].toUpperCase(),
+      x + 16,
+      y + 16,
+      200,
+      14,
+      { fontSize: fs(7), color, charSpacing: 1 },
+    );
+    addText(slide, project.title, x + 16, y + 38, 336, 44, {
+      fontSize: fs(12),
+      bold: true,
+      color: C.fg,
+      lineSpacing: fs(14),
+    });
+    addText(slide, project.summary, x + 16, y + 86, 336, 54, {
+      fontSize: fs(8),
+      color: C.muted,
+      lineSpacing: fs(10),
+    });
+    addText(slide, project.tech.slice(0, 3).join("  ·  "), x + 16, y + 160, 336, 18, {
+      fontSize: fs(7.5),
+      color: C.muted,
+    });
+  });
+
+  addText(
+    slide,
+    `${projectCount} projetos no portfólio · github.com/rhyan05`,
+    64,
+    636,
+    1152,
+    16,
+    { fontSize: fs(8), color: C.muted, align: "center", charSpacing: 1.2 },
+  );
+
+  slide.addNotes(
+    `Projetos em destaque: ${projectHighlights.map((project) => project.title).join("; ")}. Portfólio completo em github.com/rhyan05.`,
   );
 }
 
 function addMetrics() {
   const slide = pptx.addSlide();
   addBackground(slide);
-  addTopBar(slide, 6);
+  addTopBar(slide, 8);
   addTitle(
     slide,
     "Minhas métricas",
@@ -756,7 +885,7 @@ function addMetrics() {
 function addMatrix() {
   const slide = pptx.addSlide();
   addBackground(slide);
-  addTopBar(slide, 7);
+  addTopBar(slide, 9);
   addTitle(
     slide,
     "Plano de carreira",
@@ -818,7 +947,7 @@ function addMatrix() {
 function addRoadmap() {
   const slide = pptx.addSlide();
   addBackground(slide);
-  addTopBar(slide, 8);
+  addTopBar(slide, 10);
   addTitle(slide, "Trajetória em 3 etapas", "Roadmap estratégico de crescimento.");
 
   addShape(slide, pptx.ShapeType.rect, 64, 290, 1152, 2, {
@@ -881,7 +1010,7 @@ function addRoadmap() {
 function addLinks() {
   const slide = pptx.addSlide();
   addBackground(slide);
-  addTopBar(slide, 9);
+  addTopBar(slide, 11);
   addTitle(slide, "Onde me encontrar", "Vamos trocar ideias sobre tecnologia, projetos e carreira.");
 
   links.forEach((link, index) => {
@@ -935,7 +1064,7 @@ function addLinks() {
 function addClosing() {
   const slide = pptx.addSlide();
   addBackground(slide);
-  addTopBar(slide, 10);
+  addTopBar(slide, 12);
 
   addText(slide, "R", 980, 360, 300, 300, {
     fontSize: fs(250),
@@ -994,6 +1123,8 @@ async function main() {
   addEvolution();
   addTrajectory();
   addCertificates();
+  addTalks();
+  addProjects();
   addMetrics();
   addMatrix();
   addRoadmap();

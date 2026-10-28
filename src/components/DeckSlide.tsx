@@ -5,13 +5,19 @@ import { timeline } from "../data/timeline";
 import {
   certificateHighlights,
   competencyMatrix,
+  deckSlides,
   email,
   links,
   metrics,
   portfolioUrl,
   profile,
+  projectAccents,
+  projectCategoryLabels,
+  projectCount,
+  projectHighlights,
   roadmap,
   skillGroups,
+  talkHighlights,
 } from "../data/presentation";
 import type { Accent, DeckSlide as DeckSlideData } from "../data/presentation";
 
@@ -44,7 +50,7 @@ const evolutionLabels: Record<string, string> = {
   "2023": "Freelance",
   "2024": "Projetos & IA",
   "2025": "REVIO",
-  "2026": "Próximos passos",
+  "2026": "Atual",
 };
 
 export function SlideCanvas({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -115,7 +121,7 @@ function SlideTopBar({ number }: { number: number }) {
     <header className="relative flex items-center justify-between px-12 pt-8">
       <Brand />
       <span className="text-[9px] uppercase tracking-[0.22em] text-muted">
-        Rhyan Lemos · {String(number).padStart(2, "0")} / 10
+        Rhyan Lemos · {String(number).padStart(2, "0")} / {deckSlides.length}
       </span>
     </header>
   );
@@ -221,7 +227,9 @@ function CoverSlide() {
 
       <div className="absolute inset-x-12 bottom-7 flex items-center justify-between">
         <Brand />
-        <span className="text-[9px] uppercase tracking-[0.22em] text-muted">01 / 10</span>
+        <span className="text-[9px] uppercase tracking-[0.22em] text-muted">
+          01 / {deckSlides.length}
+        </span>
       </div>
     </div>
   );
@@ -463,25 +471,25 @@ function CertificatesSlide() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           {certificateHighlights.map((certificate) => (
             <div
               key={certificate.title}
-              className={`flex flex-col justify-between rounded-2xl border p-4 ${accentBorder[certificate.accent]} ${accentBg[certificate.accent]}`}
+              className={`flex flex-col justify-between rounded-2xl border p-3 ${accentBorder[certificate.accent]} ${accentBg[certificate.accent]}`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-[7px] uppercase tracking-[0.14em] text-muted">
+                  <span className="text-[6.5px] uppercase tracking-[0.14em] text-muted">
                     {certificate.issuer}
                   </span>
                   <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${accentDot[certificate.accent]}`} />
                 </div>
-                <h3 className="mt-3 text-[14px] font-semibold leading-snug text-fg">
+                <h3 className="mt-2 text-[12px] font-semibold leading-snug text-fg">
                   {certificate.title}
                 </h3>
-                <p className="mt-2 text-[8px] leading-snug text-muted">{certificate.description}</p>
+                <p className="mt-1.5 text-[7.5px] leading-snug text-muted">{certificate.description}</p>
               </div>
-              <p className="text-[8px] text-muted/70">{certificate.year}</p>
+              <p className="pt-2 text-[7.5px] text-muted/70">{certificate.year}</p>
             </div>
           ))}
         </div>
@@ -490,10 +498,105 @@ function CertificatesSlide() {
   );
 }
 
-function MetricsSlide() {
+function TalksSlide() {
+  const highlight = talkHighlights.find((talk) => talk.highlight) ?? talkHighlights[0];
+  const others = talkHighlights.filter((talk) => talk !== highlight);
+
   return (
     <SlideFrame
       number={6}
+      title="Palestras & eventos"
+      subtitle={`${talkHighlights.length} eventos, workshops e imersões que acompanhei.`}
+    >
+      <div className="flex flex-1 flex-col gap-3">
+        <div className="rounded-2xl border border-magenta/30 bg-magenta/[0.06] p-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[7px] uppercase tracking-[0.16em] text-magenta">{highlight.event}</p>
+              <h3 className="mt-1 text-[18px] font-semibold text-fg">{highlight.title}</h3>
+              {highlight.description && (
+                <p className="mt-1 max-w-[820px] text-[9px] leading-snug text-muted">
+                  {highlight.description}
+                </p>
+              )}
+            </div>
+            {highlight.year && (
+              <span className="shrink-0 rounded-full border border-magenta/25 bg-magenta/10 px-2 py-0.5 text-[8px] font-semibold text-magenta">
+                {highlight.year}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="grid flex-1 grid-cols-2 gap-3">
+          {others.map((talk) => (
+            <div
+              key={talk.title}
+              className="flex flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.04] p-3"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[7px] uppercase tracking-[0.14em] text-muted">{talk.event}</p>
+                  <h3 className="mt-1 line-clamp-2 text-[10px] font-semibold leading-snug text-fg">
+                    {talk.title}
+                  </h3>
+                </div>
+                {talk.year && <span className="shrink-0 text-[8px] text-muted/70">{talk.year}</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </SlideFrame>
+  );
+}
+
+function ProjectsSlide() {
+  return (
+    <SlideFrame
+      number={7}
+      title="Projetos em destaque"
+      subtitle={`${projectHighlights.length} projetos em destaque · ${projectCount} no portfólio.`}
+    >
+      <div className="grid flex-1 grid-cols-3 gap-3">
+        {projectHighlights.map((project) => {
+          const projectAccent = projectAccents[project.category];
+
+          return (
+            <div
+              key={project.title}
+              className={`flex flex-col rounded-2xl border p-4 ${accentBorder[projectAccent]} ${accentBg[projectAccent]}`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className={`text-[7px] uppercase tracking-[0.16em] ${accentText[projectAccent]}`}>
+                  {projectCategoryLabels[project.category]}
+                </span>
+                <span className={`h-1.5 w-1.5 rounded-full ${accentDot[projectAccent]}`} />
+              </div>
+              <h3 className="mt-2 text-[13px] font-semibold leading-snug text-fg">{project.title}</h3>
+              <p className="mt-2 text-[8px] leading-snug text-muted">{project.summary}</p>
+              <div className="mt-auto flex flex-wrap gap-1 pt-3">
+                {project.tech.slice(0, 3).map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[7px] text-muted"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </SlideFrame>
+  );
+}
+
+function MetricsSlide() {
+  return (
+    <SlideFrame
+      number={8}
       title="Minhas métricas"
       subtitle="Uma boa organização traz clareza, melhora a comunicação e otimiza o tempo."
     >
@@ -527,7 +630,7 @@ function MetricsSlide() {
 function MatrixSlide() {
   return (
     <SlideFrame
-      number={7}
+      number={9}
       title="Plano de carreira"
       subtitle="Matriz de competências · autoavaliação e direcionamento estratégico."
     >
@@ -567,7 +670,7 @@ function MatrixSlide() {
 function RoadmapSlide() {
   return (
     <SlideFrame
-      number={8}
+      number={10}
       title="Trajetória em 3 etapas"
       subtitle="Roadmap estratégico de crescimento."
     >
@@ -635,7 +738,7 @@ function LinkIcon({ link }: { link: (typeof links)[number] }) {
 function LinksSlide() {
   return (
     <SlideFrame
-      number={9}
+      number={11}
       title="Onde me encontrar"
       subtitle="Vamos trocar ideias sobre tecnologia, projetos e carreira."
     >
@@ -675,7 +778,7 @@ function ClosingSlide() {
         R
       </span>
 
-      <SlideTopBar number={10} />
+      <SlideTopBar number={12} />
 
       <div className="relative flex flex-1 flex-col items-center justify-center px-16 text-center">
         <span className="inline-flex items-center rounded-full border border-mint/25 bg-mint/10 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-mint">
@@ -713,6 +816,10 @@ export function DeckSlide({ slide, index }: { slide: DeckSlideData; index: numbe
       return <TrajectorySlide />;
     case "certificates":
       return <CertificatesSlide />;
+    case "talks":
+      return <TalksSlide />;
+    case "projects":
+      return <ProjectsSlide />;
     case "metrics":
       return <MetricsSlide />;
     case "matrix":

@@ -1,3 +1,6 @@
+import { projects } from "./projects";
+import { talks } from "./talks";
+
 export const presentationUrl = "/img-home/apresentacoes/rhyan-lemos-apresentacao.pptx";
 
 export type SlideVariant =
@@ -6,6 +9,8 @@ export type SlideVariant =
   | "evolution"
   | "trajectory"
   | "certificates"
+  | "talks"
+  | "projects"
   | "metrics"
   | "matrix"
   | "roadmap"
@@ -24,6 +29,8 @@ export const deckSlides: DeckSlide[] = [
   { id: "evolution", navTitle: "Minha evolução profissional", variant: "evolution" },
   { id: "trajectory", navTitle: "Minha trajetória profissional", variant: "trajectory" },
   { id: "certificates", navTitle: "Certificados & habilidades", variant: "certificates" },
+  { id: "talks", navTitle: "Palestras & eventos", variant: "talks" },
+  { id: "projects", navTitle: "Projetos em destaque", variant: "projects" },
   { id: "metrics", navTitle: "Minhas métricas", variant: "metrics" },
   { id: "matrix", navTitle: "Plano de carreira", variant: "matrix" },
   { id: "roadmap", navTitle: "Trajetória em 3 etapas", variant: "roadmap" },
@@ -108,7 +115,53 @@ export const certificateHighlights: {
     description: "Comunicação e leitura em contexto profissional.",
     accent: "mint",
   },
+  {
+    title: "Formação para a Primeira Liderança",
+    issuer: "FM2S",
+    year: "2026",
+    description: "Liderança, comunicação e gestão de equipes.",
+    accent: "violet",
+  },
+  {
+    title: "Imersão Inteligência Artificial",
+    issuer: "Alura",
+    year: "2025",
+    description: "Fundamentos de IA, modelos e aplicações práticas.",
+    accent: "magenta",
+  },
 ];
+
+export const talkHighlights = talks;
+
+const featuredProjectTitles = new Set([
+  "Apple Shop Clone",
+  "Meteora E-commerce",
+  "Projeto Alluh",
+  "API Livraria",
+  "Toni - Assistente Financeiro",
+  "Machine Learning Models",
+]);
+
+export const projectHighlights = projects
+  .filter((project) => featuredProjectTitles.has(project.title))
+  .map((project) => ({
+    ...project,
+    summary: `${project.description.split(".")[0]}.`,
+  }));
+
+export const projectCount = projects.length;
+
+export const projectCategoryLabels = {
+  frontend: "Front-end",
+  backend: "Back-end",
+  "machine-learning": "Machine Learning",
+} as const;
+
+export const projectAccents = {
+  frontend: "mint",
+  backend: "violet",
+  "machine-learning": "magenta",
+} as const;
 
 export const skillGroups = [
   { label: "Linguagens", items: ["PHP", "Python", "JavaScript / TypeScript"] },
