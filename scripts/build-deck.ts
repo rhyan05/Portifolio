@@ -1,32 +1,24 @@
-import fsModule from "node:fs";
+﻿import fsModule from "node:fs";
 import path from "node:path";
 import PptxGenJS from "pptxgenjs";
-import {
-  certificateHighlights,
-  competencyMatrix,
-  deckSlides,
-  email,
-  links,
-  metrics,
-  portfolioUrl,
-  profile,
-  projectAccents,
-  projectCategoryLabels,
-  projectCount,
-  projectHighlights,
-  roadmap,
-  skillGroups,
-  talkHighlights,
-} from "../src/data/presentation";
+import { email, portfolioUrl, presentation } from "../src/data/presentation";
+import { certificationTotal } from "../src/data/certifications";
 import { timeline } from "../src/data/timeline";
-import { certifications } from "../src/data/certifications";
+import { deckText } from "../src/i18n/deck";
+
+const lang = process.argv[2] === "en" ? "en" : "pt";
+const content = presentation[lang];
+const deck = deckText[lang];
 
 const pptx = new PptxGenJS();
 pptx.layout = "LAYOUT_WIDE";
 pptx.author = "Rhyan Lemos";
 pptx.company = "Rhyan.dev";
-pptx.subject = "Apresentação profissional";
-pptx.title = "Rhyan Lemos — Desenvolvedor Full Stack";
+pptx.subject = lang === "en" ? "Professional presentation" : "ApresentaÃ§Ã£o profissional";
+pptx.title =
+  lang === "en"
+    ? "Rhyan Lemos â€” Full Stack Developer"
+    : "Rhyan Lemos â€” Desenvolvedor Full Stack";
 pptx.revision = "1";
 pptx.theme = { headFontFace: "Segoe UI", bodyFontFace: "Segoe UI" };
 
@@ -37,7 +29,7 @@ const outPath = path.join(
   "public",
   "img-home",
   "apresentacoes",
-  "rhyan-lemos-apresentacao.pptx",
+  lang === "en" ? "rhyan-lemos-apresentacao-en.pptx" : "rhyan-lemos-apresentacao.pptx",
 );
 
 const C = {
@@ -61,7 +53,7 @@ const accent: Record<string, string> = {
 const UNIT = 13.333 / 1280;
 const u = (px: number) => px * UNIT;
 const fs = (px: number) => px * 0.75;
-const TOTAL_SLIDES = deckSlides.length;
+const TOTAL_SLIDES = content.deckSlides.length;
 
 type Slide = ReturnType<typeof pptx.addSlide>;
 
@@ -226,7 +218,7 @@ function addTopBar(slide: Slide, number: number) {
     28,
     { fontSize: fs(18), bold: true, valign: "middle" },
   );
-  addText(slide, `RHYAN LEMOS · ${String(number).padStart(2, "0")} / ${TOTAL_SLIDES}`, 900, 48, 316, 20, {
+  addText(slide, `RHYAN LEMOS Â· ${String(number).padStart(2, "0")} / ${TOTAL_SLIDES}`, 900, 48, 316, 20, {
     fontSize: fs(10),
     color: C.muted,
     align: "right",
@@ -295,19 +287,19 @@ function addCover() {
   const slide = pptx.addSlide();
   addBackground(slide);
 
-  addEyebrow(slide, "APRESENTAÇÃO · 2026", 64, 64, 210);
+  addEyebrow(slide, deck.cover.eyebrow.toUpperCase(), 64, 64, 210);
 
-  addText(slide, "QUEM SOU", 64, 136, 760, 100, {
+  addText(slide, deck.cover.title1, 64, 136, 760, 100, {
     fontSize: fs(88),
     bold: true,
     color: C.fg,
   });
-  addText(slide, "EU?", 64, 222, 360, 100, {
+  addText(slide, deck.cover.title2, 64, 222, 360, 100, {
     fontSize: fs(88),
     bold: true,
     color: C.mint,
   });
-  addText(slide, "E no que trabalho?", 64, 326, 540, 38, {
+  addText(slide, deck.cover.subtitle, 64, 326, 540, 38, {
     fontSize: fs(28),
     color: C.fg,
   });
@@ -315,12 +307,12 @@ function addCover() {
     fill: { color: C.mint },
     line: { type: "none" },
   });
-  addText(slide, "Rhyan Lemos Silveira", 64, 408, 540, 28, {
+  addText(slide, content.profile.name, 64, 408, 540, 28, {
     fontSize: fs(16),
     bold: true,
     color: C.fg,
   });
-  addText(slide, "Desenvolvedor Full Stack · Sistemas de Informação", 64, 438, 600, 24, {
+  addText(slide, deck.cover.role, 64, 438, 600, 24, {
     fontSize: fs(13),
     color: C.muted,
   });
@@ -352,7 +344,7 @@ function addCover() {
     fill: { color: C.night, transparency: 15 },
     line: { color: C.white, transparency: 80, width: 0.75 },
   });
-  addIcon(slide, "img-home/icon-skills/hard-skills/TypeScript.png", 790, 411, 15);
+  addIcon(slide, "img-home/icon-skills/hard-skills/typescript.svg", 790, 411, 15);
   addText(slide, "TypeScript", 808, 412, 82, 16, { fontSize: fs(10), bold: true });
 
   addShape(slide, pptx.ShapeType.roundRect, 64, 648, 34, 34, {
@@ -386,140 +378,152 @@ function addCover() {
     charSpacing: 1.5,
   });
 
-  slide.addNotes(
-    "Capa da apresentação. Quem sou eu, no que trabalho e uma introdução visual ao meu perfil profissional.",
-  );
+  slide.addNotes(deck.cover.notes);
 }
 
 function addProfile() {
   const slide = pptx.addSlide();
   addBackground(slide);
   addTopBar(slide, 2);
-  addTitle(slide, "Quem sou eu e no que trabalho", `${profile.name} · ${profile.role}`);
+  addTitle(slide, deck.profile.title, `${content.profile.name} Â· ${content.profile.role}`);
 
-  addText(slide, profile.summary, 64, 200, 360, 84, {
-    fontSize: fs(13),
+  addText(slide, content.profile.summary, 64, 200, 330, 84, {
+    fontSize: fs(14),
     color: C.muted,
     lineSpacing: fs(18),
   });
-  addChips(slide, profile.stack, 64, 300, 360, C.mint);
+  addChips(slide, content.profile.stack, 64, 300, 330, C.mint);
 
-  addCard(slide, 64, 500, 360, 120, C.mint);
-  addText(slide, "BASE", 84, 516, 120, 14, {
-    fontSize: fs(8),
+  addCard(slide, 64, 500, 330, 120, C.mint);
+  addText(slide, deck.profile.base.toUpperCase(), 84, 516, 120, 14, {
+    fontSize: fs(9),
     bold: true,
     color: C.mint,
     charSpacing: 1,
   });
-  addText(slide, profile.location, 84, 536, 300, 26, {
+  addText(slide, content.profile.location, 84, 536, 280, 26, {
+    fontSize: fs(18),
+    bold: true,
+    color: C.fg,
+  });
+  addText(slide, `${content.profile.education} Â· ${content.profile.graduation.school}`, 84, 566, 290, 20, {
+    fontSize: fs(10.5),
+    color: C.muted,
+  });
+
+  addCard(slide, 414, 190, 391, 200, C.mint);
+  addText(slide, deck.profile.current.toUpperCase(), 430, 206, 220, 14, {
+    fontSize: fs(9),
+    bold: true,
+    color: C.mint,
+    charSpacing: 1,
+  });
+  addText(slide, content.profile.current.company, 430, 226, 230, 26, {
     fontSize: fs(17),
     bold: true,
     color: C.fg,
   });
-  addText(slide, `${profile.education} · ${profile.graduation.school}`, 84, 566, 320, 20, {
-    fontSize: fs(9),
-    color: C.muted,
-  });
-
-  addCard(slide, 450, 190, 250, 150, C.mint);
-  addText(slide, "ATUAÇÃO ATUAL", 466, 206, 220, 14, {
+  addText(slide, content.profile.current.period, 660, 230, 125, 14, {
     fontSize: fs(8),
-    bold: true,
-    color: C.mint,
-    charSpacing: 1,
+    color: C.muted,
+    align: "right",
   });
-  addText(slide, profile.current.company, 466, 226, 220, 34, {
-    fontSize: fs(19),
-    bold: true,
+  addText(slide, content.profile.current.role, 430, 254, 230, 18, {
+    fontSize: fs(10.5),
     color: C.fg,
   });
-  addText(slide, profile.current.role, 466, 264, 220, 18, {
-    fontSize: fs(11),
-    color: C.fg,
-  });
-  addText(slide, profile.current.description, 466, 286, 220, 26, {
-    fontSize: fs(9),
+  addText(slide, content.profile.current.description, 430, 276, 355, 22, {
+    fontSize: fs(9.5),
     color: C.muted,
-    lineSpacing: fs(11),
+    lineSpacing: fs(11.5),
   });
-  addText(slide, profile.current.period, 466, 318, 220, 14, {
-    fontSize: fs(8),
-    color: C.muted,
+  content.profile.current.highlights.forEach((highlight, index) => {
+    addText(slide, `â€¢ ${highlight}`, 430, 304 + index * 26, 355, 24, {
+      fontSize: fs(9),
+      color: C.muted,
+      lineSpacing: fs(10.5),
+    });
   });
 
-  addCard(slide, 720, 190, 250, 150, C.violet);
-  addText(slide, "FORMAÇÃO", 736, 206, 220, 14, {
-    fontSize: fs(8),
+  addCard(slide, 825, 190, 391, 200, C.violet);
+  addText(slide, deck.profile.education.toUpperCase(), 841, 206, 220, 14, {
+    fontSize: fs(9),
     bold: true,
     color: C.violet,
     charSpacing: 1,
   });
-  addText(slide, profile.graduation.course, 736, 226, 220, 34, {
-    fontSize: fs(19),
+  addText(slide, content.profile.graduation.course, 841, 226, 230, 26, {
+    fontSize: fs(17),
     bold: true,
     color: C.fg,
   });
-  addText(slide, profile.graduation.school, 736, 264, 220, 18, {
-    fontSize: fs(11),
+  addText(slide, content.profile.graduation.period, 1070, 230, 125, 14, {
+    fontSize: fs(8),
+    color: C.muted,
+    align: "right",
+  });
+  addText(slide, content.profile.graduation.school, 841, 254, 230, 18, {
+    fontSize: fs(10.5),
     color: C.fg,
   });
-  addText(slide, profile.graduation.description, 736, 286, 220, 26, {
-    fontSize: fs(9),
+  addText(slide, content.profile.graduation.description, 841, 276, 355, 22, {
+    fontSize: fs(9.5),
     color: C.muted,
-    lineSpacing: fs(11),
+    lineSpacing: fs(11.5),
   });
-  addText(slide, profile.graduation.period, 736, 318, 220, 14, {
-    fontSize: fs(8),
-    color: C.muted,
+  content.profile.graduation.highlights.forEach((highlight, index) => {
+    addText(slide, `â€¢ ${highlight}`, 841, 304 + index * 26, 355, 24, {
+      fontSize: fs(9),
+      color: C.muted,
+      lineSpacing: fs(10.5),
+    });
   });
 
-  addCard(slide, 450, 360, 520, 260);
-  addText(slide, "COMO EU TRABALHO", 466, 376, 400, 14, {
-    fontSize: fs(8),
+  addCard(slide, 414, 410, 802, 220);
+  addText(slide, deck.profile.work.toUpperCase(), 430, 426, 400, 14, {
+    fontSize: fs(9),
     bold: true,
     color: C.muted,
     charSpacing: 1,
   });
-  profile.workStyle.forEach((item, index) => {
-    const column = index % 2;
-    const row = Math.floor(index / 2);
-    const x = 466 + column * 250;
-    const y = 410 + row * 80;
-    addText(slide, `0${index + 1}`, x, y, 22, 18, {
-      fontSize: fs(9),
+  content.profile.workStyle.forEach((item, index) => {
+    const column = index % 3;
+    const row = Math.floor(index / 3);
+    const x = 430 + column * 252;
+    const y = 456 + row * 80;
+    addText(slide, `0${index + 1}`, x, y, 18, 16, {
+      fontSize: fs(9.5),
       bold: true,
       color: C.mint,
     });
-    addText(slide, item.title, x + 22, y, 200, 18, {
-      fontSize: fs(10),
+    addText(slide, item.title, x + 18, y, 220, 16, {
+      fontSize: fs(11),
       bold: true,
       color: C.fg,
     });
-    addText(slide, item.description, x + 22, y + 18, 210, 26, {
-      fontSize: fs(8),
+    addText(slide, item.description, x + 18, y + 16, 220, 34, {
+      fontSize: fs(9.5),
       color: C.muted,
-      lineSpacing: fs(10),
+      lineSpacing: fs(11.5),
     });
   });
 
-  slide.addNotes(
-    "Perfil profissional: resumo, stack, localização, atuação atual na REVIO, formação em Sistemas de Informação e forma de trabalho.",
-  );
+  slide.addNotes(deck.profile.notes);
 }
 
 function addEvolution() {
   const slide = pptx.addSlide();
   addBackground(slide);
   addTopBar(slide, 3);
-  addEyebrow(slide, "MINHA EVOLUÇÃO", 550, 110, 180);
+  addEyebrow(slide, deck.evolution.eyebrow.toUpperCase(), 550, 110, 180);
 
-  addText(slide, "Minha evolução", 240, 168, 800, 64, {
+  addText(slide, deck.evolution.title1, 240, 168, 800, 64, {
     fontSize: fs(58),
     bold: true,
     color: C.fg,
     align: "center",
   });
-  addText(slide, "profissional", 240, 224, 800, 64, {
+  addText(slide, deck.evolution.title2, 240, 224, 800, 64, {
     fontSize: fs(58),
     bold: true,
     color: C.mint,
@@ -527,7 +531,7 @@ function addEvolution() {
   });
   addText(
     slide,
-    "Da base técnica ao desenvolvimento full stack: experiências, projetos e próximos passos.",
+    deck.evolution.subtitle,
     240,
     300,
     800,
@@ -540,15 +544,7 @@ function addEvolution() {
     line: { type: "none" },
   });
 
-  const labels: Record<string, string> = {
-    "2022": "BASE TÉCNICA",
-    "2023": "FREELANCE",
-    "2024": "PROJETOS & IA",
-    "2025": "REVIO",
-    "2026": "ATUAL",
-  };
-
-  timeline.forEach((entry, index) => {
+  timeline[lang].forEach((entry, index) => {
     const centerX = 180 + index * 230;
     addShape(slide, pptx.ShapeType.ellipse, centerX - 6, 414, 12, 12, {
       fill: { color: entry.current ? C.mint : entry.future ? C.violet : C.ink },
@@ -560,17 +556,23 @@ function addEvolution() {
       color: entry.current ? C.mint : C.fg,
       align: "center",
     });
-    addText(slide, labels[entry.period] ?? "", centerX - 60, 474, 120, 18, {
-      fontSize: fs(8),
-      color: C.muted,
-      align: "center",
-      charSpacing: 0.8,
-    });
+    addText(
+      slide,
+      (deck.evolution.labels[entry.period as keyof typeof deck.evolution.labels] ?? "").toUpperCase(),
+      centerX - 60,
+      474,
+      120,
+      18,
+      {
+        fontSize: fs(8),
+        color: C.muted,
+        align: "center",
+        charSpacing: 0.8,
+      },
+    );
   });
 
-  slide.addNotes(
-    "Linha do tempo resumida: 2022 base técnica, 2023 freelance e graduação, 2024 projetos e IA, 2025 REVIO e 2026 como ano atual.",
-  );
+  slide.addNotes(deck.evolution.notes);
 }
 
 function addTrajectory() {
@@ -579,8 +581,8 @@ function addTrajectory() {
   addTopBar(slide, 4);
   addTitle(
     slide,
-    "Minha trajetória profissional",
-    "Da base técnica ao full stack: experiências, projetos e próximos passos.",
+    deck.trajectory.title,
+    deck.trajectory.subtitle,
   );
 
   addShape(slide, pptx.ShapeType.rect, 64, 220, 1152, 2, {
@@ -591,7 +593,7 @@ function addTrajectory() {
   const columnWidth = 220;
   const gap = 8;
 
-  timeline.forEach((entry, index) => {
+  timeline[lang].forEach((entry, index) => {
     const x = 64 + index * (columnWidth + gap);
     const color = entry.current ? C.mint : entry.future ? C.violet : C.white;
 
@@ -609,10 +611,10 @@ function addTrajectory() {
     });
 
     if (entry.current) {
-      addChip(slide, "ATUAL", x + 112, 258, C.mint, 52);
+      addChip(slide, deck.trajectory.current.toUpperCase(), x + 112, 258, C.mint, 52);
     }
     if (entry.future) {
-      addChip(slide, "PLANO", x + 112, 258, C.violet, 52);
+      addChip(slide, deck.trajectory.plan.toUpperCase(), x + 112, 258, C.violet, 52);
     }
 
     addText(slide, entry.title, x + 12, 296, columnWidth - 24, 34, {
@@ -629,7 +631,7 @@ function addTrajectory() {
     });
 
     entry.highlights.slice(0, 3).forEach((highlight, highlightIndex) => {
-      addText(slide, `▸ ${highlight}`, x + 12, 364 + highlightIndex * 30, columnWidth - 24, 30, {
+      addText(slide, `â–¸ ${highlight}`, x + 12, 364 + highlightIndex * 30, columnWidth - 24, 30, {
         fontSize: fs(8),
         color: C.muted,
         lineSpacing: fs(9),
@@ -637,7 +639,7 @@ function addTrajectory() {
     });
 
     if (entry.tags && entry.tags.length > 0) {
-      addText(slide, entry.tags.join(" · "), x + 12, 496, columnWidth - 24, 40, {
+      addText(slide, entry.tags.join(" Â· "), x + 12, 496, columnWidth - 24, 40, {
         fontSize: fs(6.5),
         color: C.muted,
         lineSpacing: fs(8),
@@ -646,139 +648,153 @@ function addTrajectory() {
     }
   });
 
-  slide.addNotes(
-    "Trajetória em cinco colunas: 2022, 2023, 2024, 2025 na REVIO e 2026 como ano atual.",
-  );
+  slide.addNotes(deck.trajectory.notes);
 }
 
 function addCertificates() {
   const slide = pptx.addSlide();
   addBackground(slide);
   addTopBar(slide, 5);
-  addTitle(slide, "Certificados & habilidades", "Aprendizado contínuo aplicado ao dia a dia.");
+  addTitle(
+    slide,
+    deck.certificates.title,
+    `${content.certificateHighlightCount} ${deck.certificates.highlighted} Â· ${certificationTotal}+ ${deck.certificates.total}.`,
+  );
 
-  addCard(slide, 64, 190, 360, 450);
-  addText(slide, `${certifications.length}+`, 84, 212, 300, 90, {
+  addCard(slide, 64, 190, 300, 450);
+  addText(slide, `${certificationTotal}+`, 84, 212, 250, 90, {
     fontSize: fs(62),
     bold: true,
     color: C.mint,
   });
-  addText(slide, "certificações e cursos", 84, 302, 300, 24, {
+  addText(slide, deck.certificates.countLabel, 84, 302, 250, 24, {
     fontSize: fs(15),
     bold: true,
     color: C.fg,
   });
-  addText(slide, "Cloud, segurança, desenvolvimento, IA, gestão e idiomas.", 84, 332, 320, 40, {
-    fontSize: fs(10),
+  addText(slide, deck.certificates.description, 84, 332, 255, 40, {
+    fontSize: fs(11.5),
     color: C.muted,
-    lineSpacing: fs(13),
+    lineSpacing: fs(14),
   });
 
   let groupY = 410;
-  skillGroups.forEach((group) => {
-    addText(slide, group.label.toUpperCase(), 84, groupY, 300, 14, {
-      fontSize: fs(7),
+  content.skillGroups.forEach((group) => {
+    addText(slide, group.label.toUpperCase(), 84, groupY, 250, 14, {
+      fontSize: fs(8.5),
       color: C.muted,
       charSpacing: 1,
     });
-    groupY = addChips(slide, group.items, 84, groupY + 16, 300, C.mint) + 18;
+    groupY = addChips(slide, group.items, 84, groupY + 16, 250, C.mint) + 18;
   });
 
-  certificateHighlights.forEach((certificate, index) => {
-    const x = 450 + (index % 3) * 260;
-    const y = 190 + Math.floor(index / 3) * 230;
-    addCard(slide, x, y, 245, 215, accent[certificate.accent]);
+  content.certificateGroups.forEach((group, groupIndex) => {
+    const x = 386 + groupIndex * 282;
+    const y = 190;
+    const width = 266;
+    const height = 450;
+    addCard(slide, x, y, width, height, accent[group.accent]);
 
-    addText(slide, certificate.issuer.toUpperCase(), x + 14, y + 14, 215, 14, {
-      fontSize: fs(6.5),
-      color: C.muted,
-      charSpacing: 1,
-    });
-    addText(slide, certificate.title, x + 14, y + 38, 217, 72, {
-      fontSize: fs(11.5),
+    addText(slide, group.label.toUpperCase(), x + 14, y + 14, 190, 14, {
+      fontSize: fs(8.5),
       bold: true,
-      color: C.fg,
-      lineSpacing: fs(13.5),
+      color: accent[group.accent],
+      charSpacing: 1,
     });
-    addText(slide, certificate.description, x + 14, y + 114, 217, 54, {
-      fontSize: fs(7.5),
+    addText(slide, String(group.items.length), x + width - 36, y + 14, 22, 14, {
+      fontSize: fs(8.5),
       color: C.muted,
-      lineSpacing: fs(9),
+      align: "right",
     });
-    addText(slide, certificate.year, x + 14, y + 184, 100, 14, {
-      fontSize: fs(7.5),
-      color: C.muted,
+
+    const step =
+      group.items.length > 1
+        ? Math.min(68, (height - 42 - 68 - 14) / (group.items.length - 1))
+        : 0;
+
+    group.items.forEach((item, index) => {
+      const itemY = y + 42 + index * step;
+      addText(slide, item.issuer.toUpperCase(), x + 14, itemY, width - 28, 10, {
+        fontSize: fs(8),
+        color: C.muted,
+        charSpacing: 0.8,
+      });
+      addText(slide, item.title, x + 14, itemY + 10, width - 28, 26, {
+        fontSize: fs(10.5),
+        bold: true,
+        color: C.fg,
+        lineSpacing: fs(12),
+      });
+      addText(slide, item.description, x + 14, itemY + 38, width - 28, 24, {
+        fontSize: fs(9.5),
+        color: C.muted,
+        lineSpacing: fs(11.5),
+      });
     });
   });
 
-  slide.addNotes(
-    `Certificados: ${certifications.length}+ cursos. Destaques em Cybersecurity (FIAP), Azure Pipelines/CI-CD (Microsoft · DIO), Lean Six Sigma e Primeira Liderança (FM2S), inglês B1 (MET) e Imersão IA (Alura).`,
-  );
+  slide.addNotes(deck.certificates.notes);
 }
 
 function addTalks() {
   const slide = pptx.addSlide();
   addBackground(slide);
   addTopBar(slide, 6);
+  const years = [...new Set(content.talkHighlights.map((talk) => talk.year).filter(Boolean))].join(" Â· ");
   addTitle(
     slide,
-    "Palestras & eventos",
-    `${talkHighlights.length} eventos, workshops e imersões que acompanhei.`,
+    deck.talks.title,
+    `${content.talkHighlights.length} ${deck.talks.events}${years ? ` Â· ${years}` : ""}.`,
   );
 
-  const highlight = talkHighlights.find((talk) => talk.highlight) ?? talkHighlights[0];
-  const others = talkHighlights.filter((talk) => talk !== highlight);
+  const highlight = content.talkHighlights.find((talk) => talk.highlight) ?? content.talkHighlights[0];
+  const others = content.talkHighlights.filter((talk) => talk !== highlight);
 
   addCard(slide, 64, 190, 1152, 96, C.magenta);
   addText(slide, highlight.event.toUpperCase(), 84, 204, 800, 14, {
-    fontSize: fs(7),
+    fontSize: fs(8.5),
     color: C.magenta,
     charSpacing: 1,
   });
-  addText(slide, highlight.title, 84, 222, 980, 26, {
-    fontSize: fs(16),
+  addText(slide, highlight.title, 84, 222, 1020, 26, {
+    fontSize: fs(19),
     bold: true,
     color: C.fg,
   });
   if (highlight.description) {
-    addText(slide, highlight.description, 84, 250, 960, 26, {
-      fontSize: fs(8),
+    addText(slide, highlight.description, 84, 250, 1020, 26, {
+      fontSize: fs(10.5),
       color: C.muted,
-      lineSpacing: fs(10),
+      lineSpacing: fs(12),
     });
   }
-  addText(slide, highlight.year ?? "", 1120, 204, 72, 14, {
-    fontSize: fs(8),
-    color: C.muted,
-    align: "right",
-  });
 
   others.forEach((talk, index) => {
     const x = 64 + (index % 2) * 584;
     const y = 300 + Math.floor(index / 2) * 108;
 
     addCard(slide, x, y, 568, 96);
-    addText(slide, talk.event.toUpperCase(), x + 16, y + 14, 420, 14, {
-      fontSize: fs(7),
+    addText(slide, talk.event.toUpperCase(), x + 16, y + 12, 500, 14, {
+      fontSize: fs(8.5),
       color: C.muted,
       charSpacing: 1,
     });
-    addText(slide, talk.title, x + 16, y + 32, 500, 36, {
-      fontSize: fs(10),
+    addText(slide, talk.title, x + 16, y + 28, 520, 34, {
+      fontSize: fs(11),
       bold: true,
       color: C.fg,
-      lineSpacing: fs(12),
+      lineSpacing: fs(13),
     });
-    addText(slide, talk.year ?? "", x + 500, y + 14, 52, 14, {
-      fontSize: fs(8),
-      color: C.muted,
-      align: "right",
-    });
+    if (talk.description) {
+      addText(slide, talk.description, x + 16, y + 64, 520, 24, {
+        fontSize: fs(9.5),
+        color: C.muted,
+        lineSpacing: fs(11.5),
+      });
+    }
   });
 
-  slide.addNotes(
-    `Palestras e eventos: ${talkHighlights.map((talk) => talk.title).join("; ")}.`,
-  );
+  slide.addNotes(deck.talks.notes);
 }
 
 function addProjects() {
@@ -787,55 +803,61 @@ function addProjects() {
   addTopBar(slide, 7);
   addTitle(
     slide,
-    "Projetos em destaque",
-    `${projectHighlights.length} projetos em destaque · ${projectCount} no portfólio.`,
+    deck.projects.title,
+    `${content.projectCount} ${deck.projects.subtitle}`,
   );
 
-  projectHighlights.forEach((project, index) => {
-    const x = 64 + (index % 3) * 392;
-    const y = 190 + Math.floor(index / 3) * 220;
-    const color = accent[projectAccents[project.category]];
+  content.projectGroups.forEach((group, groupIndex) => {
+    const x = 64 + groupIndex * 392;
+    const y = 190;
+    const width = 368;
+    const height = 430;
+    const color = accent[group.accent];
 
-    addCard(slide, x, y, 368, 205, color);
-    addText(
-      slide,
-      projectCategoryLabels[project.category].toUpperCase(),
-      x + 16,
-      y + 16,
-      200,
-      14,
-      { fontSize: fs(7), color, charSpacing: 1 },
-    );
-    addText(slide, project.title, x + 16, y + 38, 336, 44, {
-      fontSize: fs(12),
+    addCard(slide, x, y, width, height, color);
+    addText(slide, group.label.toUpperCase(), x + 16, y + 16, 260, 14, {
+      fontSize: fs(8.5),
       bold: true,
-      color: C.fg,
-      lineSpacing: fs(14),
+      color,
+      charSpacing: 1,
     });
-    addText(slide, project.summary, x + 16, y + 86, 336, 54, {
-      fontSize: fs(8),
+    addText(slide, String(group.projects.length), x + width - 38, y + 16, 22, 14, {
+      fontSize: fs(8.5),
       color: C.muted,
-      lineSpacing: fs(10),
+      align: "right",
     });
-    addText(slide, project.tech.slice(0, 3).join("  ·  "), x + 16, y + 160, 336, 18, {
-      fontSize: fs(7.5),
-      color: C.muted,
+
+    group.projects.forEach((project, index) => {
+      const itemY = y + 44 + index * 90;
+      addText(slide, project.title, x + 16, itemY, width - 32, 24, {
+        fontSize: fs(11),
+        bold: true,
+        color: C.fg,
+        lineSpacing: fs(13),
+      });
+      addText(slide, project.summary, x + 16, itemY + 24, width - 32, 34, {
+        fontSize: fs(9.5),
+        color: C.muted,
+        lineSpacing: fs(11.5),
+      });
+      addText(slide, project.tech.slice(0, 3).join(" Â· "), x + 16, itemY + 60, width - 32, 16, {
+        fontSize: fs(8.5),
+        color: C.muted,
+      });
     });
   });
 
   addText(
     slide,
-    `${projectCount} projetos no portfólio · github.com/rhyan05`,
+    `${content.projectCount} ${deck.projects.footer}`,
     64,
     636,
     1152,
     16,
-    { fontSize: fs(8), color: C.muted, align: "center", charSpacing: 1.2 },
+    { fontSize: fs(8.5), color: C.muted, align: "center", charSpacing: 1.2 },
   );
 
-  slide.addNotes(
-    `Projetos em destaque: ${projectHighlights.map((project) => project.title).join("; ")}. Portfólio completo em github.com/rhyan05.`,
-  );
+  slide.addNotes(deck.projects.notes);
 }
 
 function addMetrics() {
@@ -844,14 +866,14 @@ function addMetrics() {
   addTopBar(slide, 8);
   addTitle(
     slide,
-    "Minhas métricas",
-    "Uma boa organização traz clareza, melhora a comunicação e otimiza o tempo.",
+    deck.metrics.title,
+    deck.metrics.subtitle,
   );
 
   addCard(slide, 64, 190, 1152, 90);
   addText(
     slide,
-    "“Uma boa organização, tanto em equipe quanto em projetos, aumenta a eficácia: traz clareza nas responsabilidades, melhora a comunicação e otimiza a gestão do tempo.”",
+    deck.metrics.quote,
     84,
     208,
     1112,
@@ -859,7 +881,7 @@ function addMetrics() {
     { fontSize: fs(12), color: C.fg, lineSpacing: fs(16) },
   );
 
-  metrics.forEach((metric, index) => {
+  content.metrics.forEach((metric, index) => {
     const x = 64 + index * 384;
     addCard(slide, x, 310, 368, 240, accent[metric.accent]);
     addText(slide, `0${index + 1}`, x + 24, 330, 120, 60, {
@@ -879,9 +901,7 @@ function addMetrics() {
     });
   });
 
-  slide.addNotes(
-    "Três frentes: organização, visão crítica para projetos e soluções criativas e funcionais.",
-  );
+  slide.addNotes(deck.metrics.notes);
 }
 
 function addMatrix() {
@@ -890,11 +910,11 @@ function addMatrix() {
   addTopBar(slide, 9);
   addTitle(
     slide,
-    "Plano de carreira",
-    "Matriz de competências · autoavaliação e direcionamento estratégico.",
+    deck.matrix.title,
+    deck.matrix.subtitle,
   );
 
-  competencyMatrix.forEach((column, index) => {
+  content.competencyMatrix.forEach((column, index) => {
     const x = 64 + index * 384;
     addCard(slide, x, 190, 368, 430, accent[column.accent]);
     addText(slide, column.subtitle.toUpperCase(), x + 24, 208, 320, 14, {
@@ -928,7 +948,7 @@ function addMatrix() {
 
   addText(
     slide,
-    "AUTOAVALIAÇÃO CONTÍNUA · DIRECIONAMENTO ESTRATÉGICO",
+    deck.matrix.footer.toUpperCase(),
     64,
     640,
     1152,
@@ -941,23 +961,21 @@ function addMatrix() {
     },
   );
 
-  slide.addNotes(
-    "Matriz de competências: fortalezas consolidadas, habilidades em desenvolvimento e próximos focos.",
-  );
+  slide.addNotes(deck.matrix.notes);
 }
 
 function addRoadmap() {
   const slide = pptx.addSlide();
   addBackground(slide);
   addTopBar(slide, 10);
-  addTitle(slide, "Trajetória em 3 etapas", "Roadmap estratégico de crescimento.");
+  addTitle(slide, deck.roadmap.title, deck.roadmap.subtitle);
 
   addShape(slide, pptx.ShapeType.rect, 64, 290, 1152, 2, {
     fill: { color: C.mint, transparency: 60 },
     line: { type: "none" },
   });
 
-  roadmap.forEach((phase, index) => {
+  content.roadmap.forEach((phase, index) => {
     const x = 64 + index * 384;
     addShape(slide, pptx.ShapeType.ellipse, x, 272, 36, 36, {
       fill: { color: accent[phase.accent] },
@@ -988,7 +1006,7 @@ function addRoadmap() {
       color: C.fg,
     });
     phase.items.forEach((item, itemIndex) => {
-      addText(slide, `▸ ${item}`, x + 20, 402 + itemIndex * 24, 320, 20, {
+      addText(slide, `â–¸ ${item}`, x + 20, 402 + itemIndex * 24, 320, 20, {
         fontSize: fs(9),
         color: C.muted,
       });
@@ -1004,18 +1022,16 @@ function addRoadmap() {
     });
   });
 
-  slide.addNotes(
-    "Roadmap em três etapas: execução e eficiência, domínio técnico e IA, gestão e mentoria.",
-  );
+  slide.addNotes(deck.roadmap.notes);
 }
 
 function addLinks() {
   const slide = pptx.addSlide();
   addBackground(slide);
   addTopBar(slide, 11);
-  addTitle(slide, "Onde me encontrar", "Vamos trocar ideias sobre tecnologia, projetos e carreira.");
+  addTitle(slide, deck.links.title, deck.links.subtitle);
 
-  links.forEach((link, index) => {
+  content.links.forEach((link, index) => {
     const x = 64 + (index % 2) * 584;
     const y = 240 + Math.floor(index / 2) * 130;
     addCard(slide, x, y, 568, 110);
@@ -1049,18 +1065,18 @@ function addLinks() {
       fontSize: fs(16),
       bold: true,
       color: C.fg,
+      hyperlink: { url: link.href },
     });
     addText(slide, link.handle, x + 90, y + 56, 440, 18, {
       fontSize: fs(10),
       color: C.muted,
+      hyperlink: { url: link.href },
     });
   });
 
-  addCenteredChips(slide, [email, "Disponível para conexões"], 640, 540, C.mint);
+  addCenteredChips(slide, [email, deck.links.available], 640, 540, C.mint);
 
-  slide.addNotes(
-    `Links e contato: ${email}. GitHub @rhyan05, LinkedIn rhyan-lemos-silveira, blog e YouTube em breve.`,
-  );
+  slide.addNotes(deck.links.notes);
 }
 
 function addClosing() {
@@ -1076,15 +1092,15 @@ function addClosing() {
     align: "center",
   });
 
-  addEyebrow(slide, "MEU SITE", 550, 150, 180);
+  addEyebrow(slide, deck.closing.eyebrow.toUpperCase(), 550, 150, 180);
 
-  addText(slide, "Vamos", 200, 212, 880, 80, {
+  addText(slide, deck.closing.title1, 200, 212, 880, 80, {
     fontSize: fs(66),
     bold: true,
     color: C.fg,
     align: "center",
   });
-  addText(slide, "conversar?", 200, 278, 880, 80, {
+  addText(slide, deck.closing.title2, 200, 278, 880, 80, {
     fontSize: fs(66),
     bold: true,
     color: C.violet,
@@ -1092,7 +1108,7 @@ function addClosing() {
   });
   addText(
     slide,
-    "Obrigado por acompanhar minha trajetória. O portfólio completo, projetos e formas de contato estão online.",
+    deck.closing.description,
     300,
     374,
     680,
@@ -1114,9 +1130,7 @@ function addClosing() {
     align: "center",
   });
 
-  slide.addNotes(
-    "Fechamento: obrigado, contatos e link do portfólio online. " + portfolioUrl,
-  );
+  slide.addNotes(deck.closing.notes + " " + portfolioUrl);
 }
 
 async function main() {
@@ -1144,3 +1158,4 @@ main().catch((error) => {
   console.error(error);
   process.exit(1);
 });
+

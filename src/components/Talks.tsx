@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { talks } from "../data/talks";
 import { useShowMore } from "../hooks/useShowMore";
+import { useLanguage } from "../i18n/LanguageProvider";
 import { Lightbox, type LightboxImage } from "./Lightbox";
 import { SectionHeader } from "./SectionHeader";
 import { ShowMoreButton } from "./ShowMoreButton";
 
 export function Talks() {
+  const { lang, t } = useLanguage();
   const [preview, setPreview] = useState<LightboxImage | null>(null);
+  const items = talks[lang];
 
-  const highlight = talks.find((talk) => talk.highlight);
-  const others = talks.filter((talk) => !talk.highlight);
+  const highlight = items.find((talk) => talk.highlight);
+  const others = items.filter((talk) => !talk.highlight);
   const { visible, expanded, hasMore, toggle } = useShowMore(others.length, 6);
 
   if (!highlight && others.length === 0) return null;
@@ -23,9 +26,9 @@ export function Talks() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Comunidade"
-          title="Palestras & Eventos"
-          subtitle="Participação em palestras, oficinas e eventos de tecnologia e inovação"
+          eyebrow={t.talks.eyebrow}
+          title={t.talks.title}
+          subtitle={t.talks.subtitle}
         />
 
         {highlight && (
@@ -40,7 +43,7 @@ export function Talks() {
                 <button
                   type="button"
                   onClick={() => setPreview({ src: highlight.image!, alt: highlight.title })}
-                  aria-label={`Ampliar: ${highlight.title}`}
+                  aria-label={`${t.talks.enlarge} ${highlight.title}`}
                   className="absolute inset-0 cursor-zoom-in"
                 >
                   <img
@@ -59,7 +62,7 @@ export function Talks() {
             </div>
 
             <div className="relative flex flex-col justify-center gap-3 p-8 md:w-1/2">
-              <span className="eyebrow w-fit">Destaque</span>
+              <span className="eyebrow w-fit">{t.talks.highlight}</span>
               <h3 className="text-[1.8rem] font-bold leading-tight text-fg">{highlight.title}</h3>
               {highlight.description && (
                 <p className="text-[0.98rem] leading-relaxed text-muted">{highlight.description}</p>
@@ -82,7 +85,7 @@ export function Talks() {
                 <button
                   type="button"
                   onClick={() => setPreview({ src: talk.image!, alt: talk.title })}
-                  aria-label={`Ampliar: ${talk.title}`}
+                  aria-label={`${t.talks.enlarge} ${talk.title}`}
                   className="relative h-[180px] cursor-zoom-in overflow-hidden bg-ink/50"
                 >
                   <img
@@ -108,7 +111,7 @@ export function Talks() {
         {hasMore && <ShowMoreButton expanded={expanded} onToggle={toggle} />}
 
         <p className="mt-8 text-center text-[0.92rem] text-muted">
-          E mais de 20 palestras, oficinas e eventos de tecnologia e inovação.
+          {t.talks.more}
         </p>
       </div>
 

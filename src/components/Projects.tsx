@@ -1,30 +1,33 @@
 import { useMemo, useState } from "react";
 import { projects } from "../data/projects";
+import { useLanguage } from "../i18n/LanguageProvider";
 import type { ProjectCategory } from "../types";
 import { ProjectCard } from "./ProjectCard";
 import { SectionHeader } from "./SectionHeader";
 
 type Filter = "all" | ProjectCategory;
 
-const filters: { value: Filter; label: string }[] = [
-  { value: "all", label: "Todos" },
-  { value: "frontend", label: "Front-end" },
-  { value: "backend", label: "Back-end" },
-  { value: "machine-learning", label: "Machine Learning" },
-];
-
 export function Projects() {
+  const { lang, t } = useLanguage();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<Filter>("all");
+  const items = projects[lang];
+
+  const filters: { value: Filter; label: string }[] = [
+    { value: "all", label: t.projects.filters.all },
+    { value: "frontend", label: t.projects.filters.frontend },
+    { value: "backend", label: t.projects.filters.backend },
+    { value: "machine-learning", label: t.projects.filters["machine-learning"] },
+  ];
 
   const filtered = useMemo(() => {
     const term = query.toLowerCase().trim();
-    return projects.filter(
+    return items.filter(
       (project) =>
         (category === "all" || project.category === category) &&
         project.title.toLowerCase().includes(term),
     );
-  }, [query, category]);
+  }, [query, category, items]);
 
   return (
     <section id="projects" className="section-shell bg-ink">
@@ -35,9 +38,9 @@ export function Projects() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Portfólio"
-          title="Projetos"
-          subtitle="Alguns dos projetos que desenvolvi ao longo da minha jornada"
+          eyebrow={t.projects.eyebrow}
+          title={t.projects.title}
+          subtitle={t.projects.subtitle}
         />
 
         <div className="mb-10 flex flex-col items-center gap-5 max-md:items-stretch" data-reveal>
@@ -52,8 +55,8 @@ export function Projects() {
               type="text"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Buscar por título..."
-              aria-label="Buscar projetos por título"
+              placeholder={t.projects.searchPlaceholder}
+              aria-label={t.projects.searchAria}
               className="w-full flex-1 bg-transparent px-1 py-1.5 text-base text-fg outline-none placeholder:text-muted/70"
             />
           </div>
@@ -79,7 +82,7 @@ export function Projects() {
         </div>
 
         {filtered.length === 0 && (
-          <p className="py-10 text-center text-muted">Nenhum projeto encontrado para essa busca.</p>
+          <p className="py-10 text-center text-muted">{t.projects.empty}</p>
         )}
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLanguage } from "../i18n/LanguageProvider";
 
 export interface LightboxImage {
   src: string;
@@ -6,6 +7,8 @@ export interface LightboxImage {
 }
 
 export function Lightbox({ image, onClose }: { image: LightboxImage | null; onClose: () => void }) {
+  const { t } = useLanguage();
+
   useEffect(() => {
     if (!image) return;
 
@@ -33,7 +36,7 @@ export function Lightbox({ image, onClose }: { image: LightboxImage | null; onCl
     >
       <button
         type="button"
-        aria-label="Fechar"
+        aria-label={t.common.close}
         className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-2xl leading-none text-fg backdrop-blur-md transition-colors hover:border-mint/40 hover:text-mint"
         onClick={onClose}
       >

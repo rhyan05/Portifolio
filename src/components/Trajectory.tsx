@@ -1,7 +1,11 @@
 import { timeline } from "../data/timeline";
+import { useLanguage } from "../i18n/LanguageProvider";
 import { SectionHeader } from "./SectionHeader";
 
 export function Trajectory() {
+  const { lang, t } = useLanguage();
+  const entries = timeline[lang];
+
   return (
     <section id="trajetoria" className="section-shell bg-night">
       <div
@@ -11,9 +15,9 @@ export function Trajectory() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Minha história"
-          title="Minha trajetória"
-          subtitle="Do suporte e da infraestrutura ao desenvolvimento full stack: os passos que construíram minha carreira."
+          eyebrow={t.trajectory.eyebrow}
+          title={t.trajectory.title}
+          subtitle={t.trajectory.subtitle}
         />
 
         <div className="relative mx-auto max-w-[980px]">
@@ -23,7 +27,7 @@ export function Trajectory() {
           />
 
           <div className="flex flex-col gap-6 lg:gap-10">
-            {timeline.map((entry, index) => {
+            {entries.map((entry, index) => {
               const right = index % 2 === 1;
 
               return (
@@ -75,10 +79,10 @@ export function Trajectory() {
                       </span>
                       {entry.current && (
                         <span className="rounded-full border border-mint/30 bg-mint/10 px-2.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-mint">
-                          Atual
+                        {t.trajectory.current}
                         </span>
                       )}
-                      {entry.future && <span className="chip">Plano</span>}
+                      {entry.future && <span className="chip">{t.trajectory.plan}</span>}
                     </div>
 
                     <h3 className="text-[1.18rem] font-semibold leading-snug text-fg">{entry.title}</h3>
@@ -134,7 +138,7 @@ export function Trajectory() {
 
         <div className="mt-12 text-center" data-reveal>
           <a href="#apresentacao" className="btn btn-secondary">
-            Ver a versão em slides
+            {t.trajectory.viewSlides}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12,5 19,12 12,19" />

@@ -1,10 +1,12 @@
+import type { ReactNode } from "react";
+
 export function SectionHeader({
   title,
   subtitle,
   eyebrow,
 }: {
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   eyebrow?: string;
 }) {
   return (

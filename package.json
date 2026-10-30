@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "deck": "tsx scripts/build-deck.ts"
+    "deck": "tsx scripts/build-deck.ts pt && tsx scripts/build-deck.ts en",
+    "cv": "node scripts/build-cv.mjs"
   },
   "dependencies": {
     "react": "^19.3.0",

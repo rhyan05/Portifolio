@@ -1,6 +1,9 @@
+import type { Lang } from "../i18n/types";
 import type { Certification } from "../types";
 
-export const certifications: Certification[] = [
+export const certificationTotal = 100;
+
+const pt: Certification[] = [
   {
     title: "Cybersecurity",
     issuer: "FIAP",
@@ -37,7 +40,7 @@ export const certifications: Certification[] = [
   },
   {
     title: "Azure Pipelines — CI/CD, Docker e Kubernetes no Azure DevOps",
-    issuer: "Microsoft · DIO",
+    issuer: "Udemy",
     year: "10/2026",
     image: "/img-home/certifications/azure-pipelines-cicd.jpg",
     category: "cloud",
@@ -146,9 +149,9 @@ export const certifications: Certification[] = [
     category: "development",
   },
   {
-    title: "Lean Seis Sigma Yellow Belt",
+    title: "Lean Seis Sigma Green Belt",
     issuer: "FM2S",
-    image: "/img-home/certifications/fm2s-lean-yellow-belt.jpg",
+    image: "/img-home/certifications/fm2s-lean-green-belt.jpg",
     category: "management",
   },
   {
@@ -172,3 +175,178 @@ export const certifications: Certification[] = [
     category: "language",
   },
 ];
+
+const en: Certification[] = [
+  {
+    title: "Cybersecurity",
+    issuer: "FIAP",
+    year: "2025",
+    image: "/img-home/certifications/fiap-cybersecurity.png",
+    category: "security",
+  },
+  {
+    title: "Introduction to Cybersecurity",
+    issuer: "Cisco",
+    year: "2025",
+    image: "/img-home/certifications/cisco-ciberseguranca.jpg",
+    category: "security",
+  },
+  {
+    title: "CC50: Introduction to Computer Science",
+    issuer: "Fundação Estudar · Harvard",
+    image: "/img-home/certifications/estudar-harvard-cc50.jpg",
+    category: "development",
+  },
+  {
+    title: "Introduction to AZ-204",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/azure-az204.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Practice Exam — AZ-204",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-simulado-az204.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Azure Pipelines — CI/CD, Docker and Kubernetes on Azure DevOps",
+    issuer: "Udemy",
+    year: "10/2026",
+    image: "/img-home/certifications/azure-pipelines-cicd.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Implementing Azure Functions",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-azure-functions.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Working with Azure Cosmos DB",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-azure-cosmos-db.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Manage Container Images in Azure Container Registry",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-imagens-container-azure.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Developing API Management Solutions",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-gerenciamento-api.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Developing Event-Based Solutions",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-solucoes-eventos.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Implementing Caching for Solutions",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-cache-solucoes.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Troubleshooting with Application Insights",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-application-insights.jpg",
+    category: "cloud",
+  },
+  {
+    title: "How to Deploy an API to the Cloud in Practice",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-deploy-api-nuvem.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Serverless Microservice for CPF Validation",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-microsservico-serverless-cpf.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Catalog Manager with Azure Functions",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-netflix-catalogo-azure.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Azure Code Challenges",
+    issuer: "Microsoft · DIO",
+    year: "2025",
+    image: "/img-home/certifications/dio-desafios-codigo-azure.jpg",
+    category: "cloud",
+  },
+  {
+    title: "Artificial Intelligence Immersion",
+    issuer: "Alura",
+    year: "2025",
+    image: "/img-home/certifications/alura-imersao-ia.jpg",
+    category: "ai",
+  },
+  {
+    title: "Artificial Intelligence Training (CPTIA)",
+    issuer: "ENIAC",
+    image: "/img-home/certifications/eniac-cptia-ia.jpg",
+    category: "ai",
+  },
+  {
+    title: "Virtual Store Backend (Parse Server + PIX)",
+    issuer: "Udemy",
+    year: "2025",
+    image: "/img-home/certifications/udemy-backend-loja-virtual.jpg",
+    category: "development",
+  },
+  {
+    title: "Create a Website with HTML, CSS and JavaScript",
+    issuer: "Fundação Bradesco",
+    image: "/img-home/certifications/bradesco-html-css-js.jpg",
+    category: "development",
+  },
+  {
+    title: "Lean Six Sigma Green Belt",
+    issuer: "FM2S",
+    image: "/img-home/certifications/fm2s-lean-green-belt.jpg",
+    category: "management",
+  },
+  {
+    title: "First Leadership Training",
+    issuer: "FM2S",
+    year: "2026",
+    image: "/img-home/certifications/fm2s-primeira-lideranca.jpg",
+    category: "management",
+  },
+  {
+    title: "Critical and Creative Thinking",
+    issuer: "IBM",
+    image: "/img-home/certifications/ibm-pensamento-critico.jpg",
+    category: "management",
+  },
+  {
+    title: "Michigan English Test (MET) — B1",
+    issuer: "MET",
+    year: "2024",
+    image: "/img-home/certifications/met-ingles-b1.jpg",
+    category: "language",
+  },
+];
+
+export const certifications: Record<Lang, Certification[]> = { pt, en };

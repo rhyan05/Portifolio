@@ -5,14 +5,16 @@ import type {
   MouseEvent as ReactMouseEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
-import { deckSlides, presentationUrl } from "../data/presentation";
+import { presentation, presentationUrl } from "../data/presentation";
+import { useLanguage } from "../i18n/LanguageProvider";
 import { DeckSlide, SlideCanvas } from "./DeckSlide";
 import { SectionHeader } from "./SectionHeader";
 
-const total = deckSlides.length;
-const half = Math.floor(total / 2);
-
 export function Presentation() {
+  const { lang, t } = useLanguage();
+  const { deckSlides } = presentation[lang];
+  const total = deckSlides.length;
+  const half = Math.floor(total / 2);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -92,17 +94,17 @@ export function Presentation() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Em slides"
-          title="Minha trajetória em slides"
-          subtitle="Uma visão rápida da minha jornada, competências e plano de carreira. Arraste, use as setas ou ative o carrossel."
+          eyebrow={t.presentation.eyebrow}
+          title={t.presentation.title}
+          subtitle={t.presentation.subtitle}
         />
 
         <div data-reveal>
           <div className="relative mx-auto max-w-[1040px]">
             <div
               role="region"
-              aria-roledescription="carrossel"
-              aria-label="Apresentação profissional em slides"
+              aria-roledescription="carousel"
+              aria-label={t.presentation.carouselAria}
               tabIndex={0}
               onKeyDown={onStageKeyDown}
               onPointerDown={onPointerDown}
@@ -163,8 +165,8 @@ export function Presentation() {
                         }}
                         aria-label={
                           slideIndex === index
-                            ? `Abrir apresentação em tela cheia: ${slide.navTitle}`
-                            : `Ir para o slide ${slideIndex + 1}: ${slide.navTitle}`
+                            ? `${t.presentation.openFullscreen}: ${slide.navTitle}`
+                            : `${t.presentation.goToSlide} ${slideIndex + 1}: ${slide.navTitle}`
                         }
                         className="absolute inset-0 z-10"
                       />
@@ -177,7 +179,7 @@ export function Presentation() {
             <button
               type="button"
               onClick={() => go(-1)}
-              aria-label="Slide anterior"
+              aria-label={t.presentation.previous}
               className="absolute left-0 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-night/80 text-fg backdrop-blur-md transition-all hover:border-mint/50 hover:text-mint sm:flex"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
@@ -187,7 +189,7 @@ export function Presentation() {
             <button
               type="button"
               onClick={() => go(1)}
-              aria-label="Próximo slide"
+              aria-label={t.presentation.next}
               className="absolute right-0 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-night/80 text-fg backdrop-blur-md transition-all hover:border-mint/50 hover:text-mint sm:flex"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
@@ -200,14 +202,14 @@ export function Presentation() {
             <p aria-live="polite" className="text-center text-[0.92rem] text-muted">
               <span className="font-semibold text-fg">{deckSlides[index].navTitle}</span>
               <span className="mx-2 text-white/20">·</span>
-              {index + 1} de {total}
+              {index + 1} {t.presentation.of} {total}
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-1 rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-md">
               <button
                 type="button"
                 onClick={() => setPlaying((value) => !value)}
-                aria-label={playing ? "Pausar carrossel" : "Ativar carrossel"}
+                aria-label={playing ? t.presentation.pause : t.presentation.play}
                 className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-white/10 hover:text-mint"
               >
                 {playing ? (
@@ -228,7 +230,7 @@ export function Presentation() {
                     key={slide.id}
                     type="button"
                     onClick={() => setIndex(slideIndex)}
-                    aria-label={`Ir para o slide ${slideIndex + 1}: ${slide.navTitle}`}
+                    aria-label={`${t.presentation.goToSlide} ${slideIndex + 1}: ${slide.navTitle}`}
                     aria-current={slideIndex === index}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       slideIndex === index ? "w-6 bg-mint" : "w-1.5 bg-white/25 hover:bg-white/50"
@@ -240,7 +242,7 @@ export function Presentation() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                aria-label="Abrir apresentação em tela cheia"
+                aria-label={t.presentation.openFullscreen}
                 className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-white/10 hover:text-mint"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -252,9 +254,9 @@ export function Presentation() {
               </button>
 
               <a
-                href={presentationUrl}
-                download="Rhyan-Lemos-Apresentacao.pptx"
-                title="Baixar apresentação em PowerPoint"
+                href={presentationUrl[lang]}
+                download={t.presentation.downloadName}
+                title={t.presentation.downloadTitle}
                 className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[0.72rem] font-semibold uppercase tracking-wide text-muted transition-colors hover:bg-white/10 hover:text-mint"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -273,29 +275,29 @@ export function Presentation() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Apresentação em tela cheia"
+          aria-label={t.presentation.openFullscreen}
           className="fixed inset-0 z-[1100] flex flex-col bg-ink/95 backdrop-blur-md"
         >
           <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
             <div className="min-w-0">
-              <p className="text-[0.7rem] uppercase tracking-[0.18em] text-mint">Apresentação</p>
+              <p className="text-[0.7rem] uppercase tracking-[0.18em] text-mint">{t.presentation.section}</p>
               <p className="truncate font-display text-[1.05rem] font-semibold text-fg">
                 {deckSlides[index].navTitle}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <a
-                href={presentationUrl}
-                download="Rhyan-Lemos-Apresentacao.pptx"
+                href={presentationUrl[lang]}
+                download={t.presentation.downloadName}
                 className="hidden items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[0.8rem] font-semibold text-fg transition-colors hover:border-mint/40 hover:text-mint sm:inline-flex"
               >
-                Baixar apresentação (.pptx)
+                {t.presentation.downloadFull}
               </a>
               <button
                 type="button"
                 autoFocus
                 onClick={() => setOpen(false)}
-                aria-label="Fechar apresentação"
+                aria-label={t.presentation.close}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-2xl leading-none text-fg transition-colors hover:border-mint/40 hover:text-mint"
               >
                 &times;
@@ -307,7 +309,7 @@ export function Presentation() {
             <button
               type="button"
               onClick={() => go(-1)}
-              aria-label="Slide anterior"
+              aria-label={t.presentation.previous}
               className="absolute left-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-night/80 text-fg backdrop-blur-md transition-colors hover:border-mint/50 hover:text-mint sm:left-6"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
@@ -324,7 +326,7 @@ export function Presentation() {
             <button
               type="button"
               onClick={() => go(1)}
-              aria-label="Próximo slide"
+              aria-label={t.presentation.next}
               className="absolute right-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-night/80 text-fg backdrop-blur-md transition-colors hover:border-mint/50 hover:text-mint sm:right-6"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
@@ -340,7 +342,7 @@ export function Presentation() {
                   key={slide.id}
                   type="button"
                   onClick={() => setIndex(slideIndex)}
-                  aria-label={`Ir para o slide ${slideIndex + 1}: ${slide.navTitle}`}
+                  aria-label={`${t.presentation.goToSlide} ${slideIndex + 1}: ${slide.navTitle}`}
                   aria-current={slideIndex === index}
                   className={`shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-300 ${
                     slideIndex === index

@@ -1,18 +1,23 @@
 ﻿import { useEffect, useState } from "react";
-
-const navItems = [
-  { href: "#about-me", label: "Sobre" },
-  { href: "#trajetoria", label: "Trajetória" },
-  { href: "#skills", label: "Skills" },
-  { href: "#certifications", label: "Certificações" },
-  { href: "#projects", label: "Projetos" },
-  { href: "#talks", label: "Palestras" },
-  { href: "#apresentacao", label: "Apresentação" },
-  { href: "#contact", label: "Contato" },
-];
+import { useLanguage } from "../i18n/LanguageProvider";
+import type { Lang } from "../i18n/types";
 
 export function Header({ hidden }: { hidden: boolean }) {
+  const { lang, setLang, t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = [
+    { href: "#about-me", label: t.nav.about },
+    { href: "#trajetoria", label: t.nav.trajectory },
+    { href: "#skills", label: t.nav.skills },
+    { href: "#certifications", label: t.nav.certifications },
+    { href: "#projects", label: t.nav.projects },
+    { href: "#talks", label: t.nav.talks },
+    { href: "#apresentacao", label: t.nav.presentation },
+    { href: "#contact", label: t.nav.contact },
+  ];
+
+  const languages: Lang[] = ["pt", "en"];
 
   useEffect(() => {
     if (hidden) setMenuOpen(false);
@@ -47,7 +52,7 @@ export function Header({ hidden }: { hidden: boolean }) {
         </a>
 
         <nav
-          aria-label="Navegação principal"
+          aria-label={t.nav.mainAria}
           className={`flex items-center max-lg:absolute max-lg:left-0 max-lg:top-full max-lg:w-full max-lg:overflow-hidden max-lg:border-b max-lg:border-white/10 max-lg:bg-night/95 max-lg:backdrop-blur-xl max-lg:transition-all max-lg:duration-500 ${
             menuOpen ? "max-lg:max-h-[500px] max-lg:opacity-100" : "max-lg:max-h-0 max-lg:opacity-0"
           }`}
@@ -66,7 +71,11 @@ export function Header({ hidden }: { hidden: boolean }) {
             ))}
             <li className="max-lg:hidden">
               <a
-                href="https://www.linkedin.com/in/rhyan-lemos-silveira/"
+                href={
+                  lang === "en"
+                    ? "https://www.linkedin.com/in/rhyan-lemos-silveira/?locale=en-US"
+                    : "https://www.linkedin.com/in/rhyan-lemos-silveira/"
+                }
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
@@ -78,29 +87,70 @@ export function Header({ hidden }: { hidden: boolean }) {
           </ul>
         </nav>
 
-        <button
-          type="button"
-          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={menuOpen}
-          className="hidden cursor-pointer flex-col justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 p-2 max-lg:flex"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span
-            className={`h-[2px] w-[24px] bg-white transition-transform duration-300 ${
-              menuOpen ? "translate-y-[8px] rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`h-[2px] w-[24px] bg-white transition-opacity duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`h-[2px] w-[24px] bg-white transition-transform duration-300 ${
-              menuOpen ? "-translate-y-[8px] -rotate-45" : ""
-            }`}
-          />
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          <div
+            role="group"
+            aria-label={t.language.label}
+            className="flex items-center rounded-full border border-white/10 bg-white/5 p-0.5"
+          >
+            <svg
+              aria-hidden="true"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="ml-1.5 mr-0.5 text-muted"
+            >
+              <path d="m5 8 6 6" />
+              <path d="m4 14 6-6 2-3" />
+              <path d="M2 5h12" />
+              <path d="M7 2h1" />
+              <path d="m22 22-5-10-5 10" />
+              <path d="M14 18h6" />
+            </svg>
+            {languages.map((language) => (
+              <button
+                key={language}
+                type="button"
+                onClick={() => setLang(language)}
+                aria-pressed={lang === language}
+                className={`cursor-pointer rounded-full px-2.5 py-1 text-[0.72rem] font-bold uppercase tracking-wide transition-colors ${
+                  lang === language ? "bg-mint text-ink" : "text-muted hover:text-fg"
+                }`}
+              >
+                {t.language[language]}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            aria-label={menuOpen ? t.nav.closeMenu : t.nav.menu}
+            aria-expanded={menuOpen}
+            className="hidden cursor-pointer flex-col justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 p-2 max-lg:flex"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span
+              className={`h-[2px] w-[24px] bg-white transition-transform duration-300 ${
+                menuOpen ? "translate-y-[8px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`h-[2px] w-[24px] bg-white transition-opacity duration-300 ${
+                menuOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`h-[2px] w-[24px] bg-white transition-transform duration-300 ${
+                menuOpen ? "-translate-y-[8px] -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </div>
     </header>
   );

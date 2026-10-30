@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { certifications } from "../data/certifications";
+import { certifications, certificationTotal } from "../data/certifications";
 import { useShowMore } from "../hooks/useShowMore";
+import { useLanguage } from "../i18n/LanguageProvider";
 import type { Certification, CertificationCategory } from "../types";
 import { Lightbox } from "./Lightbox";
 import { SectionHeader } from "./SectionHeader";
@@ -8,28 +9,34 @@ import { ShowMoreButton } from "./ShowMoreButton";
 
 type Filter = "all" | CertificationCategory;
 
-const filters: { value: Filter; label: string }[] = [
-  { value: "all", label: "Todas" },
-  { value: "cloud", label: "Cloud & Azure" },
-  { value: "security", label: "Segurança" },
-  { value: "development", label: "Desenvolvimento" },
-  { value: "ai", label: "IA" },
-  { value: "management", label: "Gestão & Soft Skills" },
-  { value: "language", label: "Idiomas" },
-];
-
 export function Certifications() {
+  const { lang, t } = useLanguage();
+  const linkedinUrl =
+    lang === "en"
+      ? "https://www.linkedin.com/in/rhyan-lemos-silveira/details/certifications/?locale=en-US"
+      : "https://www.linkedin.com/in/rhyan-lemos-silveira/details/certifications/";
   const [preview, setPreview] = useState<Certification | null>(null);
   const [category, setCategory] = useState<Filter>("all");
+  const items = certifications[lang];
+
+  const filters: { value: Filter; label: string }[] = [
+    { value: "all", label: t.certifications.filters.all },
+    { value: "cloud", label: t.certifications.filters.cloud },
+    { value: "security", label: t.certifications.filters.security },
+    { value: "development", label: t.certifications.filters.development },
+    { value: "ai", label: t.certifications.filters.ai },
+    { value: "management", label: t.certifications.filters.management },
+    { value: "language", label: t.certifications.filters.language },
+  ];
 
   const filtered = useMemo(
-    () => certifications.filter((cert) => category === "all" || cert.category === category),
-    [category],
+    () => items.filter((cert) => category === "all" || cert.category === category),
+    [category, items],
   );
 
   const { visible, expanded, hasMore, toggle, reset } = useShowMore(filtered.length, 8);
 
-  if (certifications.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <section id="certifications" className="section-shell bg-night">
@@ -40,9 +47,23 @@ export function Certifications() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Aprendizado contínuo"
-          title="Certificações"
-          subtitle="Cursos e certificações que reforçam minhas habilidades técnicas"
+          eyebrow={t.certifications.eyebrow}
+          title={t.certifications.title}
+          subtitle={
+            <>
+              {t.certifications.selection} {certificationTotal}+ {t.certifications.countLabel}{" "}
+              {t.certifications.on}{" "}
+              <a
+                href={linkedinUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-mint underline-offset-4 hover:underline"
+              >
+                {t.certifications.linkedin}
+              </a>
+              .
+            </>
+          }
         />
 
         <div className="mb-10 flex flex-wrap justify-center gap-2" data-reveal>
@@ -70,7 +91,7 @@ export function Certifications() {
               <button
                 type="button"
                 onClick={() => setPreview(cert)}
-                aria-label={`Ampliar certificado: ${cert.title}`}
+                aria-label={`${t.certifications.enlarge} ${cert.title}`}
                 className="relative flex h-[190px] cursor-zoom-in items-center justify-center overflow-hidden bg-gradient-to-br from-[#eef2f8] to-[#d9e3f0] p-4"
               >
                 <img
@@ -93,6 +114,17 @@ export function Certifications() {
         </div>
 
         {hasMore && <ShowMoreButton expanded={expanded} onToggle={toggle} />}
+
+        <div className="mt-10 flex flex-col items-center gap-4 text-center">
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-primary bg-gradient-to-r from-mint via-mint-strong to-mint text-[1.05rem] font-bold shadow-[0_0_36px_-6px_rgba(46,242,182,0.95)] ring-2 ring-mint-strong/60 hover:scale-[1.03]"
+          >
+            {t.certifications.viewAllPrefix} {certificationTotal}+ {t.certifications.viewAllSuffix}
+          </a>
+        </div>
       </div>
 
       <Lightbox

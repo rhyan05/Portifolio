@@ -1,27 +1,16 @@
+import { useLanguage } from "../i18n/LanguageProvider";
 import { SectionHeader } from "./SectionHeader";
 
-const cards = [
-  {
-    icon: "/img-home/icons/programmer-icon.png",
-    title: "Desenvolvimento Full Stack",
-    description:
-      "Sou um desenvolvedor apaixonado por tecnologia, com experiência sólida em desenvolvimento web completo. Trabalho com as mais modernas tecnologias para criar aplicações robustas, escaláveis e com excelente experiência do usuário.",
-  },
-  {
-    icon: "/img-home/icons/design-icon.png",
-    title: "Design & UX/UI",
-    description:
-      "Possuo expertise em design de interfaces e experiência do usuário, criando layouts intuitivos e visualmente atrativos. Desenvolvo posts profissionais e apresentações animadas que comunicam efetivamente a mensagem desejada.",
-  },
-  {
-    icon: "/img-home/icons/methodology-icon.png",
-    title: "Gestão & Metodologias Ágeis",
-    description:
-      "Experiência prática em gestão de pessoas e projetos, aplicando metodologias ágeis no dia a dia. Busco constantemente novos conhecimentos e conexões para evoluir profissionalmente e contribuir para o sucesso das equipes.",
-  },
+const icons = [
+  "/img-home/icons/programmer-icon.png",
+  "/img-home/icons/design-icon.png",
+  "/img-home/icons/methodology-icon.png",
 ];
 
 export function About() {
+  const { t } = useLanguage();
+  const cards = t.about.cards.map((card, index) => ({ ...card, icon: icons[index] }));
+
   return (
     <section id="about-me" className="section-shell bg-night">
       <div
@@ -31,9 +20,9 @@ export function About() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Sobre mim"
-          title="Como eu trabalho"
-          subtitle="Conheça um pouco mais sobre minha jornada e expertise"
+          eyebrow={t.about.eyebrow}
+          title={t.about.title}
+          subtitle={t.about.subtitle}
         />
 
         <div className="grid gap-6 md:grid-cols-3">

@@ -1,26 +1,35 @@
+import { useLanguage } from "../i18n/LanguageProvider";
 import { SectionHeader } from "./SectionHeader";
 
-const socials: { href: string; label: string; icon: string; iconClass?: string }[] = [
-  {
-    href: "https://github.com/rhyan05",
-    label: "GitHub",
-    icon: "/img-home/contact/github.png",
-    iconClass: "brightness-0 invert",
-  },
-  {
-    href: "https://www.linkedin.com/in/rhyan-lemos-silveira/",
-    label: "LinkedIn",
-    icon: "/img-home/contact/linkedin.png",
-  },
-  {
-    href: "/img-home/curriculo/Curriculo%20-%20escrito%203.0%202025.pdf",
-    label: "Currículo",
-    icon: "/img-home/contact/curriculo.png",
-    iconClass: "brightness-0 invert",
-  },
-];
-
 export function Contact() {
+  const { lang, t } = useLanguage();
+
+  const socials: { href: string; label: string; icon: string; iconClass?: string }[] = [
+    {
+      href: "https://github.com/rhyan05",
+      label: "GitHub",
+      icon: "/img-home/contact/github.png",
+      iconClass: "brightness-0 invert",
+    },
+    {
+      href:
+        lang === "en"
+          ? "https://www.linkedin.com/in/rhyan-lemos-silveira/?locale=en-US"
+          : "https://www.linkedin.com/in/rhyan-lemos-silveira/",
+      label: "LinkedIn",
+      icon: "/img-home/contact/linkedin.png",
+    },
+    {
+      href:
+        lang === "en"
+          ? "/img-home/curriculo/Rhyan-Lemos-Silveira-CV-EN.pdf"
+          : "/img-home/curriculo/Rhyan-Lemos-Silveira-CV.pdf",
+      label: t.contact.resume,
+      icon: "/img-home/contact/curriculo.png",
+      iconClass: "brightness-0 invert",
+    },
+  ];
+
   return (
     <section id="contact" className="section-shell bg-ink">
       <div
@@ -45,9 +54,9 @@ export function Contact() {
 
           <div className="relative">
             <SectionHeader
-              eyebrow="Contato"
-              title="Vamos Trabalhar Juntos?"
-              subtitle="Estou sempre aberto a novas oportunidades e desafios interessantes. Se você tem um projeto em mente ou gostaria de discutir possibilidades de colaboração, não hesite em entrar em contato."
+              eyebrow={t.contact.eyebrow}
+              title={t.contact.title}
+              subtitle={t.contact.subtitle}
             />
 
             <div className="flex flex-col items-center gap-6">
@@ -82,7 +91,7 @@ export function Contact() {
               </div>
 
               <p className="text-[0.82rem] uppercase tracking-[0.18em] text-muted">
-                Guarulhos · SP · Brasil
+                {t.contact.location}
               </p>
             </div>
           </div>

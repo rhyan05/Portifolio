@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rhyan Lemos Silveira — Currículo</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        color: #1e293b;
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: #ffffff;
+      }
+
+      .hero {
+        padding: 7.5mm 15mm 5mm;
+        background: #0b1220;
+        color: #ffffff;
+        border-bottom: 2mm solid #2ef2b6;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 23pt;
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+
+      .role {
+        margin: 2mm 0 0;
+        font-size: 10.5pt;
+        color: #e2e8f0;
+      }
+
+      .role span {
+        color: #86efac;
+      }
+
+      .contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2mm 4.5mm;
+        margin-top: 5mm;
+        font-size: 8pt;
+        color: #cbd5e1;
+      }
+
+      .contact a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .content {
+        padding: 4mm 15mm 6mm;
+      }
+
+      section {
+        margin-top: 2.5mm;
+      }
+
+      section:first-child {
+        margin-top: 0;
+      }
+
+      h2 {
+        margin: 0 0 1.4mm;
+        padding-bottom: 0.8mm;
+        border-bottom: 0.3mm solid #dbe7e5;
+        color: #0f766e;
+        font-size: 8.2pt;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .summary {
+        font-size: 9pt;
+        line-height: 1.35;
+        color: #334155;
+      }
+
+      .skills {
+        display: grid;
+        gap: 1mm;
+        margin: 0;
+      }
+
+      .skill-row {
+        display: grid;
+        grid-template-columns: 31mm 1fr;
+        gap: 3mm;
+        font-size: 8.55pt;
+        line-height: 1.27;
+      }
+
+      .skill-row dt {
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .skill-row dd {
+        margin: 0;
+        color: #334155;
+      }
+
+      .job {
+        margin-bottom: 1.7mm;
+      }
+
+      .job:last-child {
+        margin-bottom: 0;
+      }
+
+      .job-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 4mm;
+      }
+
+      .job h3,
+      .project h3 {
+        margin: 0;
+        font-size: 9.2pt;
+        line-height: 1.2;
+        color: #0f172a;
+      }
+
+      .job h3 span,
+      .project h3 span {
+        font-weight: 400;
+        color: #475569;
+      }
+
+      .date {
+        flex-shrink: 0;
+        color: #64748b;
+        font-size: 8.1pt;
+        white-space: nowrap;
+      }
+
+      .job ul {
+        margin: 1mm 0 0;
+        padding-left: 4mm;
+      }
+
+      .job li {
+        margin-bottom: 0.55mm;
+        color: #334155;
+        font-size: 8.65pt;
+        line-height: 1.28;
+      }
+
+      .job li::marker {
+        color: #14b8a6;
+      }
+
+      .job p {
+        margin-top: 0.8mm;
+        color: #475569;
+        font-size: 8.4pt;
+        line-height: 1.25;
+      }
+
+      .job.compact {
+        margin-bottom: 1.5mm;
+      }
+
+      .projects {
+        display: grid;
+        gap: 1.2mm;
+      }
+
+      .project-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 3mm;
+      }
+
+      .project h3 span {
+        font-size: 8pt;
+      }
+
+      .project a {
+        flex-shrink: 0;
+        color: #0f766e;
+        font-size: 8pt;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .project p {
+        margin-top: 0.5mm;
+        color: #475569;
+        font-size: 8.45pt;
+        line-height: 1.25;
+      }
+
+      .line-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 4mm;
+        margin-bottom: 1.4mm;
+      }
+
+      .line-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .line-row strong {
+        color: #0f172a;
+        font-size: 8.8pt;
+      }
+
+      .line-row span {
+        color: #475569;
+        font-size: 8.5pt;
+      }
+
+      .cert-list {
+        display: grid;
+        gap: 0.5mm;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .cert-list li {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 4mm;
+        font-size: 8.45pt;
+        line-height: 1.24;
+      }
+
+      .cert-list span {
+        flex-shrink: 0;
+        color: #64748b;
+        font-size: 8pt;
+        white-space: nowrap;
+      }
+
+      .languages {
+        color: #334155;
+        font-size: 8.7pt;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <h1>Rhyan Lemos Silveira</h1>
+        <p class="role" data-i18n-html="cv.role">Desenvolvedor Full Stack <span>• React • TypeScript • Python • Cloud</span></p>
+        <div class="contact">
+          <span>Guarulhos, SP</span>
+          <a href="tel:+5511983647307">(11) 98364-7307</a>
+          <a href="mailto:rhyan05@outlook.com">rhyan05@outlook.com</a>
+          <a href="https://www.linkedin.com/in/rhyan-lemos-silveira/" data-i18n-href="cv.linkedin">linkedin.com/in/rhyan-lemos-silveira</a>
+          <a href="https://github.com/rhyan05">github.com/rhyan05</a>
+        </div>
+      </header>
+
+      <div class="content">
+        <section>
+          <h2 data-i18n="cv.summary.title">Resumo</h2>
+          <p class="summary" data-i18n="cv.summary.text">
+            Desenvolvedor Full Stack com experiência em aplicações web, APIs REST e integrações de
+            pagamento. Atua com React, TypeScript, Python, Docker e CI/CD, além de code review, QA e
+            colaboração com produto. Inglês avançado e vivência em metodologias ágeis.
+          </p>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.competencies.title">Competências</h2>
+          <dl class="skills">
+            <div class="skill-row">
+              <dt data-i18n="cv.competencies.fullstack">Full Stack</dt>
+              <dd data-i18n="cv.competencies.fullstackValue">React, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Bootstrap, Figma</dd>
+            </div>
+            <div class="skill-row">
+              <dt data-i18n="cv.competencies.backend">Back-end</dt>
+              <dd data-i18n="cv.competencies.backendValue">Python, Node.js, PHP, APIs REST, MongoDB, MySQL, SQL</dd>
+            </div>
+            <div class="skill-row">
+              <dt data-i18n="cv.competencies.devops">DevOps &amp; Cloud</dt>
+              <dd data-i18n="cv.competencies.devopsValue">Docker, Docker Compose, GitHub Actions, CI/CD, Azure, Google Cloud</dd>
+            </div>
+            <div class="skill-row">
+              <dt data-i18n="cv.competencies.quality">Qualidade</dt>
+              <dd data-i18n="cv.competencies.qualityValue">Git/GitHub, code review, QA, Scrum, Kanban, documentação técnica</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.experience.title">Experiência profissional</h2>
+
+          <article class="job">
+            <div class="job-head">
+              <h3 data-i18n-html="cv.revio.title">REVIO Tecnologia <span>· Desenvolvedor Full Stack</span></h3>
+              <span class="date" data-i18n="cv.revio.date">07/2025 – Atual</span>
+            </div>
+            <ul>
+              <li data-i18n="cv.revio.item1">
+                Desenvolvimento e manutenção de aplicações web full stack com React, TypeScript,
+                Python, JavaScript, HTML, CSS e Tailwind.
+              </li>
+              <li data-i18n="cv.revio.item2">
+                Criação de APIs REST e integrações de pagamento com Web Checkout e Webhooks.
+              </li>
+              <li data-i18n="cv.revio.item3">
+                Gestão de ambientes e entregas com Docker, Docker Compose, GitHub Actions, CI/CD e
+                Google Cloud Console.
+              </li>
+              <li data-i18n="cv.revio.item4">
+                Code review, QA e colaboração com design em protótipos no Figma, documentação técnica
+                e padronização de soluções.
+              </li>
+            </ul>
+          </article>
+
+          <article class="job">
+            <div class="job-head">
+              <h3 data-i18n-html="cv.hub.title">HUB de Carreiras · Eniac <span>· Estagiário de Desenvolvimento Full Stack</span></h3>
+              <span class="date">04/2025 – 07/2025</span>
+            </div>
+            <ul>
+              <li data-i18n="cv.hub.item1">
+                Desenvolvimento full stack com PHP, JavaScript, HTML e CSS, integrando um banco
+                MongoDB ao front-end.
+              </li>
+              <li data-i18n="cv.hub.item2">
+                Apoio à gestão de equipe e projetos, organização de demandas e acompanhamento de
+                entregas.
+              </li>
+            </ul>
+          </article>
+
+          <article class="job compact">
+            <div class="job-head">
+              <h3 data-i18n-html="cv.strongtech.title">StrongTech <span>· Técnico de Informática Júnior</span></h3>
+              <span class="date">10/2024 – 12/2024</span>
+            </div>
+            <p data-i18n="cv.strongtech.text">Montagem, manutenção e testes de hardware corporativo.</p>
+          </article>
+
+          <article class="job">
+            <div class="job-head">
+              <h3 data-i18n-html="cv.eniac.title">Centro Universitário Eniac <span>· Estagiário de Desenvolvimento Web</span></h3>
+              <span class="date">08/2022 – 12/2022</span>
+            </div>
+            <ul>
+              <li data-i18n="cv.eniac.item1">
+                Manutenção e criação de páginas nos sites institucionais com HTML, CSS, Bootstrap e
+                PHP; pesquisas de qualidade e apoio à gestão ágil de projetos.
+              </li>
+            </ul>
+          </article>
+
+          <article class="job compact">
+            <div class="job-head">
+              <h3 data-i18n-html="cv.somar.title">SOMAR Contabilidade <span>· Estagiário de Suporte de Informática</span></h3>
+              <span class="date">08/2021 – 07/2022</span>
+            </div>
+            <p data-i18n="cv.somar.text">Suporte técnico, manutenção de computadores e relatórios de desempenho.</p>
+          </article>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.projects.title">Projetos</h2>
+          <div class="projects">
+            <article class="project">
+              <div class="project-head">
+                <h3 data-i18n-html="cv.project.toni.title">Toni — Assistente Financeiro <span>Python · Machine Learning · IA</span></h3>
+                <a href="https://stone-challenge-eight.vercel.app/">Demo ↗</a>
+              </div>
+              <p data-i18n="cv.project.toni.text">Assistente financeiro com IA para microempreendedores, criado no desafio da Stone.</p>
+            </article>
+            <article class="project">
+              <div class="project-head">
+                <h3 data-i18n-html="cv.project.api.title">API Livraria <span>PHP · MySQL · REST API</span></h3>
+                <a href="https://github.com/rhyan05/livraria-API">GitHub ↗</a>
+              </div>
+              <p data-i18n="cv.project.api.text">API RESTful com CRUD e banco relacional de cinco tabelas.</p>
+            </article>
+            <article class="project">
+              <div class="project-head">
+                <h3 data-i18n-html="cv.project.alluh.title">Alluh <span>PHP · JavaScript · HTML · CSS</span></h3>
+                <a href="https://github.com/rhyan05/Projeto_Alluh">GitHub ↗</a>
+              </div>
+              <p data-i18n="cv.project.alluh.text">Gestão de usuários com autenticação, upload de imagens e níveis de acesso.</p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.education.title">Formação</h2>
+          <div class="line-row">
+            <div>
+              <strong data-i18n="cv.education.degree">Bacharelado em Sistemas de Informação</strong>
+              <span> · Centro Universitário Eniac</span>
+            </div>
+            <span class="date" data-i18n="cv.education.degreeDate">08/2024 – 06/2027 · cursando</span>
+          </div>
+          <div class="line-row">
+            <div>
+              <strong data-i18n="cv.education.technical">Curso Técnico Integrado em Informática</strong>
+              <span> · Centro Universitário Eniac</span>
+            </div>
+            <span class="date" data-i18n="cv.education.technicalDate">01/2020 – 12/2022 · concluído</span>
+          </div>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.certifications.title">Certificações</h2>
+          <ul class="cert-list">
+            <li>
+              <span data-i18n="cv.cert.azurePipelines">Azure Pipelines — CI/CD, Docker e Kubernetes no Azure DevOps</span>
+              <span>Udemy · 2026</span>
+            </li>
+            <li><span data-i18n="cv.cert.az204">Introdução a AZ-204</span> <span>Microsoft · DIO · 2025</span></li>
+            <li><span data-i18n="cv.cert.lean">Lean Seis Sigma Green Belt</span> <span>FM2S</span></li>
+            <li><span data-i18n="cv.cert.cc50">CC50: Introdução à Ciência da Computação</span> <span>Fundação Estudar · Harvard</span></li>
+            <li><span data-i18n="cv.cert.cptia">Capacitação em Inteligência Artificial (CPTIA)</span> <span>ENIAC</span></li>
+            <li><span data-i18n="cv.cert.cybersecurity">Cybersecurity</span> <span>FIAP · 2025</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.languages.title">Idiomas</h2>
+          <p class="languages" data-i18n="cv.languages.text">
+            Português — nativo · Inglês — avançado · Espanhol — básico
+          </p>
+        </section>
+
+        <section>
+          <h2 data-i18n="cv.skills.title">Habilidades</h2>
+          <p class="languages" data-i18n="cv.skills.text">
+            HTML | CSS | JavaScript | TypeScript | React | Node.js | Python | PHP | MySQL | SQL |
+            Azure | Google Cloud Console | CI/CD | Versionamento | Metodologias Ágeis | Back4App |
+            Microsoft Office | Suporte Técnico | Automação | Desenvolvimento Back-end | Visão Crítica |
+            Fluxogramas | Identificação de Padrões
+          </p>
+        </section>
+      </div>
+    </main>
+    <script src="cv-i18n.js"></script>
+  </body>
+</html>

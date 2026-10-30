@@ -1,4 +1,5 @@
 import { skillCategories } from "../data/skills";
+import { useLanguage } from "../i18n/LanguageProvider";
 import type { SkillLevel } from "../types";
 import { SectionHeader } from "./SectionHeader";
 
@@ -8,13 +9,10 @@ const levelStyles: Record<SkillLevel, string> = {
   advanced: "border-mint/30 bg-mint/10 text-mint",
 };
 
-const levelLabel: Record<SkillLevel, string> = {
-  basic: "Básico",
-  intermediate: "Intermediário",
-  advanced: "Avançado",
-};
-
 export function Skills() {
+  const { lang, t } = useLanguage();
+  const categories = skillCategories[lang];
+
   return (
     <section id="skills" className="section-shell bg-ink">
       <div
@@ -24,13 +22,13 @@ export function Skills() {
 
       <div className="relative mx-auto max-w-[1200px] px-5">
         <SectionHeader
-          eyebrow="Stack"
-          title="Skills & Tecnologias"
-          subtitle="Tecnologias e ferramentas que utilizo no desenvolvimento"
+          eyebrow={t.skills.eyebrow}
+          title={t.skills.title}
+          subtitle={t.skills.subtitle}
         />
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {skillCategories.map((category, index) => (
+          {categories.map((category, index) => (
             <div
               key={category.title}
               data-reveal
@@ -53,7 +51,7 @@ export function Skills() {
                     className="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/[0.03] p-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-mint/30 hover:bg-white/[0.06]"
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-night/70">
-                      <img src={skill.icon} alt="" className="h-5 w-5 object-contain" />
+                      <img src={skill.icon} alt="" className="h-5 w-full object-contain" />
                     </span>
                     <div className="flex flex-1 flex-wrap items-center justify-between gap-2">
                       <span className="text-[0.95rem] font-semibold text-fg">{skill.name}</span>
@@ -61,7 +59,7 @@ export function Skills() {
                         className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[0.66rem] font-medium ${levelStyles[skill.level]}`}
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                        {levelLabel[skill.level]}
+                        {t.skills.levels[skill.level]}
                       </span>
                     </div>
                   </div>

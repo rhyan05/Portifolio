@@ -1,12 +1,9 @@
+import { useLanguage } from "../i18n/LanguageProvider";
 import type { Project } from "../types";
 
-const categoryLabel: Record<Project["category"], string> = {
-  frontend: "Front-end",
-  backend: "Back-end",
-  "machine-learning": "Machine Learning",
-};
-
 export function ProjectCard({ project }: { project: Project }) {
+  const { t } = useLanguage();
+
   return (
     <article className="group glass flex flex-col overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1.5 hover:border-mint/30 hover:shadow-[0_24px_60px_-28px_rgba(46,242,182,0.5)]">
       <div className="relative aspect-[16/10] w-full overflow-hidden">
@@ -21,7 +18,7 @@ export function ProjectCard({ project }: { project: Project }) {
           className="absolute inset-0 bg-gradient-to-t from-night via-night/10 to-transparent opacity-80"
         />
         <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-night/70 px-3 py-1 text-[0.7rem] font-medium text-mint backdrop-blur-md">
-          {categoryLabel[project.category]}
+          {t.projects.filters[project.category]}
         </span>
 
         {project.demo && (
@@ -30,7 +27,7 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.demo}
               target="_blank"
               rel="noreferrer"
-              aria-label={`Abrir demo de ${project.title}`}
+              aria-label={`${t.projects.openDemo} ${project.title}`}
               className="flex h-12 w-12 items-center justify-center rounded-full bg-mint text-ink shadow-[0_0_30px_-4px_rgba(46,242,182,0.8)] transition-transform hover:scale-110"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -67,7 +64,7 @@ export function ProjectCard({ project }: { project: Project }) {
               className="inline-flex items-center gap-1.5 text-[0.85rem] font-semibold text-fg/80 transition-colors hover:text-mint"
             >
               <img src="/img-home/contact/github.png" alt="" className="h-4 w-4 brightness-0 invert" />
-              Código Fonte
+              {t.projects.sourceCode}
             </a>
           )}
           {project.demo && (
@@ -77,7 +74,7 @@ export function ProjectCard({ project }: { project: Project }) {
               rel="noreferrer"
               className="inline-flex items-center gap-1 text-[0.85rem] font-semibold text-mint transition-colors hover:text-mint-strong"
             >
-              Demo
+              {t.projects.demo}
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                 <line x1="7" y1="17" x2="17" y2="7" />
                 <polyline points="7,7 17,7 17,17" />

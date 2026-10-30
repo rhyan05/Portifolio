@@ -1,3 +1,5 @@
+import type { Lang } from "../i18n/types";
+
 export interface TimelineEntry {
   period: string;
   title: string;
@@ -9,7 +11,7 @@ export interface TimelineEntry {
   future?: boolean;
 }
 
-export const timeline: TimelineEntry[] = [
+const pt: TimelineEntry[] = [
   {
     period: "2022",
     title: "Primeiros passos na tecnologia",
@@ -103,3 +105,100 @@ export const timeline: TimelineEntry[] = [
     current: true,
   },
 ];
+
+const en: TimelineEntry[] = [
+  {
+    period: "2022",
+    title: "First steps in technology",
+    company: "Somar · ENIAC",
+    description:
+      "I started from the foundation: support, networking and infrastructure, while studying IT and building my first web projects.",
+    highlights: [
+      "Technical support and customer service at Somar",
+      "Web development at ENIAC",
+      "IT Technician and programming logic",
+      "First algorithms, landing pages and Git/GitHub",
+    ],
+    tags: ["Networks", "Support", "HTML", "CSS", "Git"],
+  },
+  {
+    period: "2023",
+    title: "Freelance and degree",
+    company: "On-demand projects · ENIAC",
+    description:
+      "I began delivering real solutions for clients and started my Information Systems degree, deepening my knowledge of APIs, databases and architecture.",
+    highlights: [
+      "Freelance and on-demand solutions",
+      "Information Systems degree",
+      "RESTful APIs with PHP and Node.js",
+      "Databases, MVC and architecture",
+    ],
+    tags: ["PHP", "Node.js", "MySQL", "MVC"],
+  },
+  {
+    period: "2024",
+    title: "Real projects and AI",
+    company: "Strong-Tech · Hackathons",
+    description:
+      "I worked with maintenance and infrastructure, joined hackathons and applied artificial intelligence to real solutions.",
+    highlights: [
+      "Hardware maintenance and diagnostics at Strong-Tech",
+      "TONI project: AI chatbot integrated with WhatsApp",
+      "Kafnet: prototyping and agile delivery",
+      "Web portfolio connected to GitHub",
+    ],
+    tags: ["AI", "WhatsApp", "Prototyping", "GitHub"],
+  },
+  {
+    period: "2025",
+    title: "Full Stack Developer",
+    company: "REVIO Tecnologia · 2025",
+    description:
+      "I joined REVIO as a full-time Full Stack Developer, working on development, support and evolution of applications.",
+    highlights: [
+      "Development and support of applications and APIs",
+      "Performance, technical debt and version control with Git",
+      "Febraban Tech, AB2L LawTech and AI workshops",
+      "Certifications in Cybersecurity (FIAP) and management (FM2S)",
+    ],
+    tags: [
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "Docker",
+      "Docker Compose",
+      "Tailwind CSS",
+      "HTML",
+      "Figma",
+      "QA",
+    ],
+  },
+  {
+    period: "2026",
+    title: "Technical consolidation",
+    company: "REVIO Tecnologia · 2026",
+    description:
+      "Full stack work focused on cloud, CI/CD and technical leadership, with studies in AI, Kubernetes and mentoring.",
+    highlights: [
+      "Azure Pipelines certification (10/2026)",
+      "First Leadership Training (FM2S)",
+      "Projects with React, TypeScript and automation",
+      "Preparation for architecture and mentoring",
+    ],
+    tags: [
+      "Azure",
+      "CI/CD",
+      "Kubernetes",
+      "AI studies",
+      "Architecture",
+      "Leadership",
+      "Mentoring",
+      "QA",
+      "Figma",
+      "Feedback collection and refinement",
+    ],
+    current: true,
+  },
+];
+
+export const timeline: Record<Lang, TimelineEntry[]> = { pt, en };

@@ -1,8 +1,12 @@
+import { useLanguage } from "../i18n/LanguageProvider";
+
 export function BackToTop({ visible }: { visible: boolean }) {
+  const { t } = useLanguage();
+
   return (
     <button
       type="button"
-      aria-label="Voltar ao topo"
+      aria-label={t.common.backToTop}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-mint/40 bg-mint/15 text-mint shadow-[0_0_34px_-8px_rgba(46,242,182,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-mint hover:text-ink ${
         visible
