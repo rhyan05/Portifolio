@@ -1,9 +1,11 @@
 ﻿import { useEffect, useState } from "react";
 import { useLanguage } from "../i18n/LanguageProvider";
+import { useMotion } from "../hooks/useMotion";
 import type { Lang } from "../i18n/types";
 
 export function Header({ hidden }: { hidden: boolean }) {
   const { lang, setLang, t } = useLanguage();
+  const { enabled: motionEnabled, toggle: toggleMotion } = useMotion();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
@@ -87,7 +89,34 @@ export function Header({ hidden }: { hidden: boolean }) {
           </ul>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2 md:-mr-10">
+          <button
+            type="button"
+            onClick={toggleMotion}
+            aria-pressed={motionEnabled}
+            aria-label={motionEnabled ? t.motion.disable : t.motion.enable}
+            title={motionEnabled ? t.motion.disable : t.motion.enable}
+            className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border transition-colors ${
+              motionEnabled
+                ? "border-mint/40 bg-mint/15 text-mint"
+                : "border-white/10 bg-white/5 text-muted hover:text-fg"
+            }`}
+          >
+            <svg
+              aria-hidden="true"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </button>
+
           <div
             role="group"
             aria-label={t.language.label}

@@ -321,16 +321,22 @@
       animation-range: entry 0% cover 26%;
     }
   }
+
+  html.force-motion [data-reveal] {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 26%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html:not(.force-motion) {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
+  html:not(.force-motion) *,
+  html:not(.force-motion) *::before,
+  html:not(.force-motion) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

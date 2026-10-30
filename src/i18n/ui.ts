@@ -24,6 +24,10 @@ const pt = {
     pt: "PT",
     en: "EN",
   },
+  motion: {
+    enable: "Ativar animações",
+    disable: "Desativar animações",
+  },
   hero: {
     available: "Disponível para novos desafios",
     greeting: "Olá, eu sou",
@@ -193,6 +197,10 @@ const en: Ui = {
     label: "Language",
     pt: "PT",
     en: "EN",
+  },
+  motion: {
+    enable: "Enable animations",
+    disable: "Disable animations",
   },
   hero: {
     available: "Available for new challenges",

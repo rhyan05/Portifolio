@@ -1,14 +1,17 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { useMotion } from "../hooks/useMotion";
 
 export default function HeroScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { enabled } = useMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const animate = enabled || !prefersReduced;
     const compact = window.matchMedia("(max-width: 768px)").matches;
 
     let renderer: THREE.WebGLRenderer;
@@ -110,7 +113,7 @@ export default function HeroScene() {
       target.y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
     };
 
-    if (!reduceMotion) {
+    if (animate) {
       window.addEventListener("pointermove", onPointerMove, { passive: true });
     }
 
@@ -158,11 +161,10 @@ export default function HeroScene() {
       frame = requestAnimationFrame(loop);
     };
 
-    if (reduceMotion) {
-      resize();
-      renderFrame();
-    } else {
+    if (animate) {
       loop();
+    } else {
+      renderFrame();
     }
 
     const intersectionObserver = new IntersectionObserver(
@@ -170,7 +172,7 @@ export default function HeroScene() {
         const nextVisible = entry.isIntersecting;
         if (nextVisible === visible) return;
         visible = nextVisible;
-        if (visible && !reduceMotion) {
+        if (visible && animate) {
           clock.start();
           loop();
         } else {
@@ -198,7 +200,7 @@ export default function HeroScene() {
       pointsMaterial.dispose();
       renderer.dispose();
     };
-  }, []);
+  }, [enabled]);
 
   return (
     <canvas
