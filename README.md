@@ -51,4 +51,4 @@ npm run deck      # regenera o PPTX editável a partir dos dados
 
 ## Demonstração
 
-[portifolio](https://portifolio-e232-83ywbv1he-rhyans-projects-36b8ad89.vercel.app/)
+[portifolio](https://rhyanportifolio.vercel.app/)
